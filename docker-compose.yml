@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:17
+    container_name: zoo_postgres
+    environment:
+      POSTGRES_DB: zoodb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .              # WAŻNE: Kontekst to główny folder solucji
+      dockerfile: ZooApp.Api/Dockerfile
+      target: build           # Zatrzymujemy się na etapie SDK
+    container_name: zoo_api
+    command: dotnet watch run --no-launch-profile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # Connection string do kontenera 'db'
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=zoodb;Username=postgres;Password=postgres
+    volumes:
+      - .:/src                # WAŻNE: Montujemy CAŁĄ solucję do kontenera
+      # Wykluczamy foldery bin/obj ze wszystkich projektów, aby nie mieszały się z Linuxowymi w kontenerze
+      - /src/ZooApp.Api/bin
+      - /src/ZooApp.Api/obj
+      - /src/ZooApp.Application/bin
+      - /src/ZooApp.Application/obj
+      - /src/ZooApp.Infrastructure/bin
+      - /src/ZooApp.Infrastructure/obj
+      - /src/ZooApp.Domain/bin
+      - /src/ZooApp.Domain/obj
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

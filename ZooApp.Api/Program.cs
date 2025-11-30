@@ -1,0 +1,30 @@
+using ZooApp.Infrastructure; // U¿ywamy metody rozszerzaj¹cej
+// using ZooApp.Application; // Analogicznie dla warstwy aplikacji
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Rejestracja warstw
+builder.Services.AddInfrastructure(builder.Configuration);
+// builder.Services.AddApplication(); 
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Automatyczna migracja (brzydka, ale skuteczna w dev)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ZooApp.Infrastructure.Persistence.ZooDbContext>();
+    db.Database.Migrate();
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.MapControllers();
+app.Run();
