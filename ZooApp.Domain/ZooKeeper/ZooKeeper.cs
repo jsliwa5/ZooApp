@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ZooApp.Domain.ZooKeeper.Task;
 
 namespace ZooApp.Domain.ZooKeeper;
 
@@ -60,10 +61,10 @@ public class ZooKeeper
     {
 
         var hoursUsedThisMonth = _tasks
-        .Where(t => t.From.Year == newTask.From.Year && t.From.Month == newTask.From.Month)
-        .Sum(t => (t.To - t.From).TotalHours);
+        .Where(t => t.ScheduledAt.Year == newTask.ScheduledAt.Year && t.ScheduledAt.Month == newTask.ScheduledAt.Month)
+        .Sum(t => t.Duration.TotalHours);
 
-        if (hoursUsedThisMonth + (newTask.To - newTask.From).TotalHours > MonthlyHoursLimit)
+        if (hoursUsedThisMonth + newTask.Duration.TotalHours > MonthlyHoursLimit)
         {
             throw new InvalidOperationException("Przekroczono limit godzin!");
         }
