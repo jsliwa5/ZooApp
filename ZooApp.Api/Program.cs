@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ZooApp.Infrastructure; // U¿ywamy metody rozszerzaj¹cej
 // using ZooApp.Application; // Analogicznie dla warstwy aplikacji
 
@@ -10,6 +11,10 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetConnectionString("ZooDatabase");
+builder.Services.AddDbContext<ZooApp.Infrastructure.Persistence.ZooDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 

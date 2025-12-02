@@ -5,6 +5,7 @@ namespace ZooApp.Domain.Vet;
 public class Visit
 {
     public ulong Id { get; init; }
+    public ulong VetId { get; set; } // some people say that id breaks the DDD principles, some say it doesn't, but surely it makes mapping to DB easier
     public ulong AnimalId { get; init; }
     public string Description { get; private set; }
     public DateTime ScheduledAt { get; private set; }

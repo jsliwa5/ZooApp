@@ -1,0 +1,50 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using ZooApp.Domain.Vet;
+using ZooApp.Infrastructure.Persistence;
+
+namespace ZooApp.Infrastructure.Repositories;
+
+public class VetRepositoryImpl : IVetRepository
+{
+
+    private readonly ZooDbContext _context;
+
+    public VetRepositoryImpl(ZooDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task Delete(Vet vet)
+    {
+        _context.Vets.Remove(vet);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<Vet?> GetVetById(ulong id)
+    {
+        return await _context.Vets.FindAsync(id);
+    }
+
+    public async Task<List<Visit>> GetVisitsForVet(ulong vetId)
+    {
+        return await _context.Visits
+            .Where(v => v.VetId == vetId)
+            .ToListAsync();
+    }
+
+    public async Task<List<Visit>> GetVisitsForVisitForTheDate(ulong vetId, DateTime date)
+    {
+        return await _context.Visits
+            .Where(v => v.VetId == vetId && v.ScheduledAt.Date == date.Date)
+            .ToListAsync();
+    }
+
+    public async Task<Vet> Save(Vet vet)
+    {
+        await _context.Vets.AddAsync(vet);
+        return vet;
+    }
+}

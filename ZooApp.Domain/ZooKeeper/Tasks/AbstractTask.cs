@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZooApp.Domain.ZooKeeper.Task;
+namespace ZooApp.Domain.ZooKeeper.Tasks;
 
 public abstract class AbstractTask : ITask
 {
@@ -14,6 +14,8 @@ public abstract class AbstractTask : ITask
 
     public string Description { get; private set; }
     public bool IsCompleted { get; private set; }
+
+    public ulong ZooKeeperId { get; set; }
 
     public AbstractTask(DateTime scheduledAt, TimeSpan duration, string description)
     {
