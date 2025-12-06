@@ -30,15 +30,17 @@ public class VetRepositoryImpl : IVetRepository
 
     public async Task<List<Visit>> GetVisitsForVet(ulong vetId)
     {
-        return await _context.Visits
+        return await _context.Set<Visit>()
             .Where(v => v.VetId == vetId)
+            .AsNoTracking()
             .ToListAsync();
     }
 
     public async Task<List<Visit>> GetVisitsForVisitForTheDate(ulong vetId, DateTime date)
     {
-        return await _context.Visits
+        return await _context.Set<Visit>()
             .Where(v => v.VetId == vetId && v.ScheduledAt.Date == date.Date)
+            .AsNoTracking()
             .ToListAsync();
     }
 

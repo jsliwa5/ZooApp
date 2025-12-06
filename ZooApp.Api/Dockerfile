@@ -19,6 +19,12 @@ RUN dotnet restore "ZooApp.Api/ZooApp.Api.csproj"
 # Kopiowanie reszty kodu źródłowego (wszystkie foldery)
 COPY . .
 
+# Instalacja narzędzia
+RUN dotnet tool install --global dotnet-ef
+
+# WAŻNE: Dodanie ścieżki do zmiennych środowiskowych
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
 # Ustawienie katalogu roboczego na API
 WORKDIR "/src/ZooApp.Api"
 

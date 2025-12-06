@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ZooApp.Domain.ZooKeeper.Task;
+using ZooApp.Domain.ZooKeeper.Tasks;
 
 namespace ZooApp.Domain.ZooKeeper;
 

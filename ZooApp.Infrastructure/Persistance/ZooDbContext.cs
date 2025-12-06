@@ -12,8 +12,14 @@ public class ZooDbContext : DbContext
 
      public DbSet<Animal> Animals { get; set; }
     public DbSet<Vet> Vets { get; set; }
-    public DbSet<Visit> Visits { get; set; }
+    //public DbSet<Visit> Visits { get; set; } //disabled to enforce aggregate root
     public DbSet<ZooKeeper> ZooKeepers { get; set; }
-    public DbSet<AnimalRelatedTask> AnimalRelatedTasks { get; set; }
-    public DbSet<OtherTask> OtherTasks { get; set; }
+
+    public DbSet<AbstractTask> Tasks { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ZooDbContext).Assembly);
+    }
+
 }

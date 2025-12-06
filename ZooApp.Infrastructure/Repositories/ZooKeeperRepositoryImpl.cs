@@ -33,7 +33,7 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         return await _context.ZooKeepers.FindAsync(id);
     }
 
-    public Task<List<ITask>> GetTasksForZooKeeper(ulong zooKeeperId)
+    public async Task<List<ITask>> GetTasksForZooKeeper(ulong zooKeeperId)
     {
         return null; // To be implemented
     }
