@@ -1,0 +1,12 @@
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\bin\Debug\net10.0\ZooApp.Domain.deps.json
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\bin\Debug\net10.0\ZooApp.Domain.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\bin\Debug\net10.0\ZooApp.Domain.pdb
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\obj\Debug\net10.0\ZooApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\obj\Debug\net10.0\ZooApp.Domain.AssemblyInfoInputs.cache
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\obj\Debug\net10.0\ZooApp.Domain.AssemblyInfo.cs
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\obj\Debug\net10.0\ZooApp.Domain.csproj.CoreCompileInputs.cache
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\obj\Debug\net10.0\ZooApp.Domain.sourcelink.json
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\obj\Debug\net10.0\ZooApp.Domain.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\obj\Debug\net10.0\refint\ZooApp.Domain.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\obj\Debug\net10.0\ZooApp.Domain.pdb
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Domain\obj\Debug\net10.0\ref\ZooApp.Domain.dll

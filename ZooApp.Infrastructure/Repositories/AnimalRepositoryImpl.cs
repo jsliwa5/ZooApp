@@ -27,7 +27,7 @@ public class AnimalRepositoryImpl : IAnimalRepository
         return _context.Animals.ToList();
     }
 
-    public async Task<Animal?> GetById(ulong id)
+    public async Task<Animal?> GetById(int id)
     {
         return _context.Animals.Find(id);
     }

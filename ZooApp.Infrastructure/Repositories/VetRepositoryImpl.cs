@@ -23,12 +23,12 @@ public class VetRepositoryImpl : IVetRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Vet?> GetVetById(ulong id)
+    public async Task<Vet?> GetVetById(int id)
     {
         return await _context.Vets.FindAsync(id);
     }
 
-    public async Task<List<Visit>> GetVisitsForVet(ulong vetId)
+    public async Task<List<Visit>> GetVisitsForVet(int vetId)
     {
         return await _context.Set<Visit>()
             .Where(v => v.VetId == vetId)
@@ -36,7 +36,7 @@ public class VetRepositoryImpl : IVetRepository
             .ToListAsync();
     }
 
-    public async Task<List<Visit>> GetVisitsForVisitForTheDate(ulong vetId, DateTime date)
+    public async Task<List<Visit>> GetVisitsForVisitForTheDate(int vetId, DateTime date)
     {
         return await _context.Set<Visit>()
             .Where(v => v.VetId == vetId && v.ScheduledAt.Date == date.Date)

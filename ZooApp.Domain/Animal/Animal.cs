@@ -8,17 +8,17 @@ namespace ZooApp.Domain.Animal;
 public class Animal
 {
     
-    public ulong Id { get; init; }
+    public int Id { get; init; }
     public string Name { get; private set; }
     public DateTime LastTimeFed { get; private set; }
     public DateTime LastHealthCheck { get; private set; }
 
-    public ulong SpeciesId { get; private set; }
+    public int SpeciesId { get; private set; }
 
     protected Animal() { }
 
     //for creating new
-    private Animal(string name, ulong speciesId)
+    private Animal(string name, int speciesId)
     {
     
         if (string.IsNullOrWhiteSpace(name))
@@ -31,12 +31,12 @@ public class Animal
         LastHealthCheck = DateTime.UtcNow;
     }
 
-    public static Animal CreateNew(string name, ulong speciesId)
+    public static Animal CreateNew(string name, int speciesId)
     {
         return new Animal(name, speciesId);
     }
 
-    public static Animal Restore(ulong id, string name, DateTime lastFed, DateTime lastCheck, ulong speciesId)
+    public static Animal Restore(int id, string name, DateTime lastFed, DateTime lastCheck, int speciesId)
     {
         return new Animal
         {

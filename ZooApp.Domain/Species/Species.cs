@@ -16,7 +16,7 @@ public enum AnimalKingdom
 
 public class Species 
 {
-    public ulong Id { get; init; } 
+    public int Id { get; init; } 
     public string Name { get; private set; }
     public int FeedingIntervalInHours { get; private set; }
     public AnimalKingdom Kingdom { get; private set; }
@@ -37,7 +37,7 @@ public class Species
         Kingdom = kingdom;
     }
 
-    public static Species Restore(ulong id, string name, int feedingInterval, AnimalKingdom kingdom)
+    public static Species Restore(int id, string name, int feedingInterval, AnimalKingdom kingdom)
     {
         return new Species
         {

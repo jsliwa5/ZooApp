@@ -5,7 +5,7 @@ using System.Text;
 namespace ZooApp.Domain.Report;
 
 public record NeglectedAnimalInfo(
-    ulong AnimalId,
+    int AnimalId,
     string AnimalName,
     string SpeciesName,
     DateTime LastFedAt,

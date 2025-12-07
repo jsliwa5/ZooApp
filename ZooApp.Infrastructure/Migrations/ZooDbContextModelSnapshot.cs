@@ -24,9 +24,11 @@ namespace ZooApp.Infrastructure.Migrations
 
             modelBuilder.Entity("ZooApp.Domain.Animal.Animal", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("LastHealthCheck")
                         .HasColumnType("timestamp with time zone");
@@ -39,8 +41,8 @@ namespace ZooApp.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<decimal>("SpeciesId")
-                        .HasColumnType("numeric(20,0)");
+                    b.Property<int>("SpeciesId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -51,9 +53,11 @@ namespace ZooApp.Infrastructure.Migrations
 
             modelBuilder.Entity("ZooApp.Domain.Species.Species", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("FeedingIntervalInHours")
                         .HasColumnType("integer");
@@ -75,9 +79,11 @@ namespace ZooApp.Infrastructure.Migrations
 
             modelBuilder.Entity("ZooApp.Domain.Vet.Vet", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -99,12 +105,14 @@ namespace ZooApp.Infrastructure.Migrations
 
             modelBuilder.Entity("ZooApp.Domain.Vet.Visit", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)");
+                        .HasColumnType("integer");
 
-                    b.Property<decimal>("AnimalId")
-                        .HasColumnType("numeric(20,0)");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -119,8 +127,8 @@ namespace ZooApp.Infrastructure.Migrations
                     b.Property<DateTime>("ScheduledAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<decimal>("VetId")
-                        .HasColumnType("numeric(20,0)");
+                    b.Property<int>("VetId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -131,9 +139,11 @@ namespace ZooApp.Infrastructure.Migrations
 
             modelBuilder.Entity("ZooApp.Domain.ZooKeeper.Tasks.AbstractTask", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -153,8 +163,8 @@ namespace ZooApp.Infrastructure.Migrations
                         .HasMaxLength(13)
                         .HasColumnType("character varying(13)");
 
-                    b.Property<decimal>("ZooKeeperId")
-                        .HasColumnType("numeric(20,0)");
+                    b.Property<int>("ZooKeeperId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -169,9 +179,11 @@ namespace ZooApp.Infrastructure.Migrations
 
             modelBuilder.Entity("ZooApp.Domain.ZooKeeper.ZooKeeper", b =>
                 {
-                    b.Property<decimal>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -193,8 +205,8 @@ namespace ZooApp.Infrastructure.Migrations
                 {
                     b.HasBaseType("ZooApp.Domain.ZooKeeper.Tasks.AbstractTask");
 
-                    b.Property<decimal>("AnimalId")
-                        .HasColumnType("numeric(20,0)")
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("integer")
                         .HasColumnName("TargetAnimalId");
 
                     b.HasDiscriminator().HasValue("AnimalRelated");

@@ -8,7 +8,7 @@ namespace ZooApp.Domain.ZooKeeper;
 public class ZooKeeper
 {
 
-    public ulong Id { get; init; }
+    public int Id { get; init; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public int MonthlyHoursLimit { get; set; }
@@ -31,7 +31,7 @@ public class ZooKeeper
     }
 
     //for restoring
-    private ZooKeeper(ulong id, string firstName, string lastName, int monthlyHoursLimit, List<AbstractTask> tasks)
+    private ZooKeeper(int id, string firstName, string lastName, int monthlyHoursLimit, List<AbstractTask> tasks)
         : this(firstName, lastName, monthlyHoursLimit)
     {
 
@@ -44,7 +44,7 @@ public class ZooKeeper
         return new ZooKeeper(firstName, lastName, monthlyHoursLimit);
     }
 
-    public static ZooKeeper Restore(ulong id, string firstName, string lastName,
+    public static ZooKeeper Restore(int id, string firstName, string lastName,
         int monthlyHoursLimit, List<AbstractTask> tasks)
     {
 

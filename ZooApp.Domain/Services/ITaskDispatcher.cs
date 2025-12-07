@@ -2,5 +2,5 @@
 
 public interface ITaskDispatcher
 {
-    Task<ulong> DispatchTaskAutomaticallyAsync(DateTime scheduledAt, TimeSpan duration, string description);
+    Task<int> DispatchTaskAutomaticallyAsync(DateTime scheduledAt, TimeSpan duration, string description);
 }

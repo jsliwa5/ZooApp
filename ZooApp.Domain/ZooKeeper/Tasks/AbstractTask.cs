@@ -6,7 +6,7 @@ namespace ZooApp.Domain.ZooKeeper.Tasks;
 
 public abstract class AbstractTask : ITask
 {
-    public ulong Id { get; init; }
+    public int Id { get; init; }
 
     public DateTime ScheduledAt { get; private set; }
 
@@ -15,7 +15,7 @@ public abstract class AbstractTask : ITask
     public string Description { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    public ulong ZooKeeperId { get; set; }
+    public int ZooKeeperId { get; set; }
 
     public AbstractTask(DateTime scheduledAt, TimeSpan duration, string description)
     {

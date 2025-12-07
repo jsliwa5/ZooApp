@@ -4,16 +4,16 @@ namespace ZooApp.Domain.Vet;
 
 public class Visit
 {
-    public ulong Id { get; init; }
-    public ulong VetId { get; set; } // some people say that id breaks the DDD principles, some say it doesn't, but surely it makes mapping to DB easier
-    public ulong AnimalId { get; init; }
+    public int Id { get; init; }
+    public int VetId { get; set; } // some people say that id breaks the DDD principles, some say it doesn't, but surely it makes mapping to DB easier
+    public int AnimalId { get; init; }
     public string Description { get; private set; }
     public DateTime ScheduledAt { get; private set; }
     public int DurationInHours { get; private set; }
 
     public bool IsCompleted { get; private set; }
 
-    internal Visit(ulong animalId, string description, DateTime scheduledAt, int durationInHours)
+    internal Visit(int animalId, string description, DateTime scheduledAt, int durationInHours)
     {
         if (durationInHours <= 0)
             throw new ArgumentException("Duration must be positive.", nameof(durationInHours));

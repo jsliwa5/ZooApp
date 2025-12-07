@@ -7,9 +7,9 @@ namespace ZooApp.Domain.ZooKeeper.Tasks;
 public class AnimalRelatedTask : AbstractTask
 {
     
-    public ulong AnimalId { get; private set; }
+    public int AnimalId { get; private set; }
 
-    public AnimalRelatedTask(ulong animalId, DateTime scheduledAt, TimeSpan duration, string description)
+    public AnimalRelatedTask(int animalId, DateTime scheduledAt, TimeSpan duration, string description)
         : base(scheduledAt, duration, description)
     {
         AnimalId = animalId;

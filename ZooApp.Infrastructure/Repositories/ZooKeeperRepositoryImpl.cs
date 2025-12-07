@@ -23,22 +23,22 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         await _context.SaveChangesAsync();
     }
 
-    public Task<ulong> DispatchTaskAutomatically(DateTime scheduledAt, TimeSpan duration, string description)
+    public Task<int> DispatchTaskAutomatically(DateTime scheduledAt, TimeSpan duration, string description)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<ZooKeeper?> GetById(ulong id)
+    public async Task<ZooKeeper?> GetById(int id)
     {
         return await _context.ZooKeepers.FindAsync(id);
     }
 
-    public async Task<List<ITask>> GetTasksForZooKeeper(ulong zooKeeperId)
+    public async Task<List<ITask>> GetTasksForZooKeeper(int zooKeeperId)
     {
         return null; // To be implemented
     }
 
-    public Task<List<ITask>> GetTasksForZooKeeperForTheDate(ulong zooKeeperId, DateTime date)
+    public Task<List<ITask>> GetTasksForZooKeeperForTheDate(int zooKeeperId, DateTime date)
     {
         return null; // To be implemented
     }

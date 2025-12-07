@@ -6,9 +6,9 @@ namespace ZooApp.Domain.Vet;
 
 public interface IVetRepository
 {
-    Task<Vet?> GetVetById(ulong id);
+    Task<Vet?> GetVetById(int id);
     Task<Vet> Save(Vet vet);
     Task Delete(Vet vet);
-    Task<List<Visit>> GetVisitsForVet(ulong vetId);
-    Task<List<Visit>> GetVisitsForVisitForTheDate(ulong vetId, DateTime date);
+    Task<List<Visit>> GetVisitsForVet(int vetId);
+    Task<List<Visit>> GetVisitsForVisitForTheDate(int vetId, DateTime date);
 }

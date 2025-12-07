@@ -6,7 +6,7 @@ namespace ZooApp.Domain.Vet;
 
 public class Vet
 {
-    public ulong Id { get; init; }
+    public int Id { get; init; }
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public int MonthlyHoursLimit { get; private set; } 
@@ -31,7 +31,7 @@ public class Vet
         MonthlyHoursLimit = monthlyHoursLimit;
     }
 
-    private Vet(ulong id, string firstName, string lastName, int monthlyHoursLimit, List<Visit> visits) 
+    private Vet(int id, string firstName, string lastName, int monthlyHoursLimit, List<Visit> visits) 
         : this(firstName, lastName, monthlyHoursLimit)
     {
         Id = id;
@@ -43,7 +43,7 @@ public class Vet
         return new Vet(firstName, lastName, monthlyHoursLimit);
     }
 
-    public static Vet restore(ulong id, string firstName, string lastName,
+    public static Vet restore(int id, string firstName, string lastName,
         int monthlyHoursLimit, List<Visit> visits)
     {
         return new Vet(
@@ -57,7 +57,7 @@ public class Vet
     }
 
 
-    public void ScheduleVisit(ulong animalId, DateTime date, int duration, string description)
+    public void ScheduleVisit(int animalId, DateTime date, int duration, string description)
     {
         
         var currentMonthlyLoad = _visits
@@ -76,7 +76,7 @@ public class Vet
         _visits.Add(newVisit);
     }
 
-    public void CancelVisit(ulong visitId)
+    public void CancelVisit(int visitId)
     {
         var visit = _visits.FirstOrDefault(v => v.Id == visitId);
         if (visit == null)

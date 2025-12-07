@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZooApp.Application.Services.Implementations
+namespace ZooApp.Application.Services.Implementations;
+
+public class AnimalCommandServiceImpl : IAnimalCommandService
 {
-    internal class AnimalCommandServiceImpl
-    {
-    }
 }
