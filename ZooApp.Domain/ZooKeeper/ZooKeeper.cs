@@ -13,8 +13,8 @@ public class ZooKeeper
     public string LastName { get; set; }
     public int MonthlyHoursLimit { get; set; }
 
-    private List<ITask> _tasks;
-    public IReadOnlyCollection<ITask> Tasks => _tasks.AsReadOnly();
+    private List<AbstractTask> _tasks;
+    public IReadOnlyCollection<AbstractTask> Tasks => _tasks.AsReadOnly();
 
 
     //for creating new
@@ -27,11 +27,11 @@ public class ZooKeeper
         FirstName = firstName;
         LastName = lastName;
         MonthlyHoursLimit = monthlyHoursLimit;
-        _tasks = new List<ITask>();
+        _tasks = new List<AbstractTask>();
     }
 
     //for restoring
-    private ZooKeeper(ulong id, string firstName, string lastName, int monthlyHoursLimit, List<ITask> tasks)
+    private ZooKeeper(ulong id, string firstName, string lastName, int monthlyHoursLimit, List<AbstractTask> tasks)
         : this(firstName, lastName, monthlyHoursLimit)
     {
 
@@ -45,7 +45,7 @@ public class ZooKeeper
     }
 
     public static ZooKeeper Restore(ulong id, string firstName, string lastName,
-        int monthlyHoursLimit, List<ITask> tasks)
+        int monthlyHoursLimit, List<AbstractTask> tasks)
     {
 
         return new ZooKeeper(
@@ -57,7 +57,7 @@ public class ZooKeeper
             );
     }
 
-    public void AssignTask(ITask newTask)
+    public void AssignTask(AbstractTask newTask)
     {
 
         var hoursUsedThisMonth = _tasks

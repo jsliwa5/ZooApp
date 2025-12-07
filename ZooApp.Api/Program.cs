@@ -4,7 +4,6 @@ using ZooApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Rejestracja warstw
 builder.Services.AddInfrastructure(builder.Configuration);
 // builder.Services.AddApplication(); 
 

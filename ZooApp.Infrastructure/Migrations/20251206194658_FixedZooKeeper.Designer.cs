@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZooApp.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using ZooApp.Infrastructure.Persistence;
 namespace ZooApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ZooDbContext))]
-    partial class ZooDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251206194658_FixedZooKeeper")]
+    partial class FixedZooKeeper
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,38 +42,9 @@ namespace ZooApp.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<decimal>("SpeciesId")
-                        .HasColumnType("numeric(20,0)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SpeciesId");
 
                     b.ToTable("Animals");
-                });
-
-            modelBuilder.Entity("ZooApp.Domain.Species.Species", b =>
-                {
-                    b.Property<decimal>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("numeric(20,0)");
-
-                    b.Property<int>("FeedingIntervalInHours")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Kingdom")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Species", (string)null);
                 });
 
             modelBuilder.Entity("ZooApp.Domain.Vet.Vet", b =>
@@ -209,10 +183,34 @@ namespace ZooApp.Infrastructure.Migrations
 
             modelBuilder.Entity("ZooApp.Domain.Animal.Animal", b =>
                 {
-                    b.HasOne("ZooApp.Domain.Species.Species", null)
-                        .WithMany()
-                        .HasForeignKey("SpeciesId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.OwnsOne("ZooApp.Domain.Animal.Species", "Species", b1 =>
+                        {
+                            b1.Property<decimal>("AnimalId")
+                                .HasColumnType("numeric(20,0)");
+
+                            b1.Property<int>("FeedingIntervalInHours")
+                                .HasColumnType("integer")
+                                .HasColumnName("FeedingInterval");
+
+                            b1.Property<string>("Kingdom")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("Kingdom");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("SpeciesName");
+
+                            b1.HasKey("AnimalId");
+
+                            b1.ToTable("Animals");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AnimalId");
+                        });
+
+                    b.Navigation("Species")
                         .IsRequired();
                 });
 

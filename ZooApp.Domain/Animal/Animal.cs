@@ -1,5 +1,7 @@
 ﻿using System;
 using ZooApp.Domain.Animal;
+using ZooApp.Domain.Species;
+using SpeciesEntity = ZooApp.Domain.Species.Species;
 
 namespace ZooApp.Domain.Animal;
 
@@ -11,33 +13,30 @@ public class Animal
     public DateTime LastTimeFed { get; private set; }
     public DateTime LastHealthCheck { get; private set; }
 
-    public Species Species { get; private set; }
-  
+    public ulong SpeciesId { get; private set; }
+
     protected Animal() { }
 
     //for creating new
-    private Animal(string name, Species species)
+    private Animal(string name, ulong speciesId)
     {
     
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Animal name cannot be empty.", nameof(name));
 
-        if (species is null)
-            throw new ArgumentNullException(nameof(species), "Animal must have a species.");
-
         Name = name;
-        Species = species;
+        SpeciesId = speciesId;
 
         LastTimeFed = DateTime.UtcNow;
         LastHealthCheck = DateTime.UtcNow;
     }
 
-    public static Animal CreateNew(string name, Species species)
+    public static Animal CreateNew(string name, ulong speciesId)
     {
-        return new Animal(name, species);
+        return new Animal(name, speciesId);
     }
 
-    public static Animal Restore(ulong id, string name, DateTime lastFed, DateTime lastCheck, Species species)
+    public static Animal Restore(ulong id, string name, DateTime lastFed, DateTime lastCheck, ulong speciesId)
     {
         return new Animal
         {
@@ -45,17 +44,17 @@ public class Animal
             Name = name,
             LastTimeFed = lastFed,
             LastHealthCheck = lastCheck,
-            Species = species
+            SpeciesId = speciesId
         };
     }
 
 
-    public bool ShouldBeFed(DateTime currentTime)
-    {
+    //public bool ShouldBeFed(DateTime currentTime)
+    //{
         
-        TimeSpan timeSinceLastFed = currentTime - LastTimeFed;
-        return timeSinceLastFed.TotalHours >= Species.FeedingIntervalInHours;
-    }
+    //    TimeSpan timeSinceLastFed = currentTime - LastTimeFed;
+    //    return timeSinceLastFed.TotalHours >= Species.FeedingIntervalInHours;
+    //}
 
     public void Feed(DateTime fedAt)
     {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ZooApp.Domain.Animal;
+using ZooApp.Domain.Species;
 
 namespace ZooApp.Infrastructure.Persistance.Configuration;
 
@@ -17,19 +18,18 @@ public class AnimalConfiguration : IEntityTypeConfiguration<Animal>
             .IsRequired()
             .HasMaxLength(100);
 
-        // Species Value Object Configuration
-        builder.OwnsOne(a => a.Species, speciesBuilder =>
-        {
-            speciesBuilder.Property(s => s.Name)
-                .HasColumnName("SpeciesName") 
-                .IsRequired();
+        builder.Property(a => a.LastTimeFed)
+            .IsRequired()
+            .HasColumnType("timestamp with time zone");
 
-            speciesBuilder.Property(s => s.FeedingIntervalInHours)
-                .HasColumnName("FeedingInterval");
+        builder.Property(a => a.LastHealthCheck)
+            .IsRequired()
+            .HasColumnType("timestamp with time zone");
 
-            speciesBuilder.Property(s => s.Kingdom)
-                .HasColumnName("Kingdom")
-                .HasConversion<string>();
-        });
+        builder.HasOne<Species>()
+               .WithMany()             
+               .HasForeignKey(a => a.SpeciesId) 
+               .IsRequired();
+
     }
 }

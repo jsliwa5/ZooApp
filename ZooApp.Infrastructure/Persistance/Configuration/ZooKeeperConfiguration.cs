@@ -11,14 +11,13 @@ public class ZooKeeperConfiguration : IEntityTypeConfiguration<ZooKeeper>
         builder.Property(z => z.FirstName).IsRequired();
         builder.Property(z => z.LastName).IsRequired();
 
-        // Relacja do zadań
-        // Musimy powiedzieć EF, że kolekcja zawiera AbstractTask, a nie ITask
-        builder.HasMany<AbstractTask>("_tasks") // Odwołujemy się do pola prywatnego!
+        builder.HasMany(z => z.Tasks) // Mapujemy publiczną właściwość!
             .WithOne()
             .HasForeignKey(t => t.ZooKeeperId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Navigation("_tasks").AutoInclude(); // Opcjonalne: zawsze ładuj zadania
+        builder.Navigation(z => z.Tasks)
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
 }
