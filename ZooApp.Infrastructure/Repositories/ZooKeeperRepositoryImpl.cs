@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ZooApp.Domain.ZooKeeper;
 using ZooApp.Domain.ZooKeeper.Tasks;
-using ZooApp.Infrastructure.Persistence;
+using ZooApp.Infrastructure.Persistance;
 
 namespace ZooApp.Infrastructure.Repositories;
 

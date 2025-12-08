@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using ZooApp.Domain.Animal;
-using ZooApp.Infrastructure.Persistence;
+using ZooApp.Infrastructure.Persistance;
 
 namespace ZooApp.Infrastructure.Repositories;
 
@@ -20,6 +21,11 @@ public class AnimalRepositoryImpl : IAnimalRepository
     {
         _context.Animals.Remove(animal);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> ExistsByIdAsync(int id)
+    {
+        return await _context.Animals.AnyAsync(s => s.Id == id);
     }
 
     public async Task<List<Animal>> GetAllAnimals()

@@ -1,9 +1,4 @@
-﻿using System;
-using ZooApp.Domain.Animal;
-using ZooApp.Domain.Species;
-using SpeciesEntity = ZooApp.Domain.Species.Species;
-
-namespace ZooApp.Domain.Animal;
+﻿namespace ZooApp.Domain.Animal;
 
 public class Animal
 {
@@ -49,12 +44,12 @@ public class Animal
     }
 
 
-    //public bool ShouldBeFed(DateTime currentTime)
-    //{
-        
-    //    TimeSpan timeSinceLastFed = currentTime - LastTimeFed;
-    //    return timeSinceLastFed.TotalHours >= Species.FeedingIntervalInHours;
-    //}
+    public bool ShouldBeFed(DateTime currentTime, int feedingIntervalInHours)
+    {
+
+        TimeSpan timeSinceLastFed = currentTime - LastTimeFed;
+        return timeSinceLastFed.TotalHours >= feedingIntervalInHours;
+    }
 
     public void Feed(DateTime fedAt)
     {

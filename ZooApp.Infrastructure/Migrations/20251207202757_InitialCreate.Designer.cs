@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ZooApp.Infrastructure.Persistence;
+using ZooApp.Infrastructure.Persistance;
+
 
 #nullable disable
 
@@ -80,7 +81,7 @@ namespace ZooApp.Infrastructure.Migrations
                     b.ToTable("Species", (string)null);
                 });
 
-            modelBuilder.Entity("ZooApp.Domain.Vet.Vet", b =>
+            modelBuilder.Entity("ZooApp.Domain.Vets.Vet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,7 +107,7 @@ namespace ZooApp.Infrastructure.Migrations
                     b.ToTable("Vets");
                 });
 
-            modelBuilder.Entity("ZooApp.Domain.Vet.Visit", b =>
+            modelBuilder.Entity("ZooApp.Domain.Vets.Visit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -231,9 +232,9 @@ namespace ZooApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ZooApp.Domain.Vet.Visit", b =>
+            modelBuilder.Entity("ZooApp.Domain.Vets.Visit", b =>
                 {
-                    b.HasOne("ZooApp.Domain.Vet.Vet", null)
+                    b.HasOne("ZooApp.Domain.Vets.Vet", null)
                         .WithMany("Visits")
                         .HasForeignKey("VetId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -249,7 +250,7 @@ namespace ZooApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ZooApp.Domain.Vet.Vet", b =>
+            modelBuilder.Entity("ZooApp.Domain.Vets.Vet", b =>
                 {
                     b.Navigation("Visits");
                 });

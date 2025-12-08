@@ -10,4 +10,7 @@ public interface IAnimalCommandService
 {
     AnimalResult CreateAnimal(CreateAnimalCommand command);
     Task FeedAnimalAsync(int animalId);
+
+    Task PerformHealthCheckAsync(int animalId);
+    Task DeleteByIdAsync(int animalId);
 }

@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ZooApp.Domain.Vet;
+using ZooApp.Domain.Vets;
+using ZooApp.Domain.Vetss;
 
 namespace ZooApp.Infrastructure.Persistance.Configuration;
 

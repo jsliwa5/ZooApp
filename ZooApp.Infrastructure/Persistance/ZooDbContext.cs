@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ZooApp.Domain.Animal;
 using ZooApp.Domain.Species;
-using ZooApp.Domain.Vet;
+using ZooApp.Domain.Vets;
 using ZooApp.Domain.ZooKeeper;
-using ZooApp.Domain.ZooKeeper.Tasks; 
+using ZooApp.Domain.ZooKeeper.Tasks;
 
-namespace ZooApp.Infrastructure.Persistence;
+namespace ZooApp.Infrastructure.Persistance;
 
 public class ZooDbContext : DbContext
 {

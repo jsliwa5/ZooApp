@@ -45,6 +45,17 @@ public class AnimalCommandServiceImpl : IAnimalCommandService
             
     }
 
+    public async Task DeleteByIdAsync(int animalId)
+    {
+        var animalToBeDeleted = _animalRepository.GetById(animalId).Result;
+        if (animalToBeDeleted == null)
+        {
+            throw new ArgumentException($"Animal with id {animalId} does not exist.");
+        }
+
+        await _animalRepository.Delete(animalToBeDeleted);
+    }
+
     public async Task FeedAnimalAsync(int animalId)
     {
         var animalToBeFed = _animalRepository.GetById(animalId).Result;
@@ -54,5 +65,16 @@ public class AnimalCommandServiceImpl : IAnimalCommandService
         }
         animalToBeFed.Feed(DateTime.UtcNow);
         await _animalRepository.Save(animalToBeFed);
+    }
+
+    public async Task PerformHealthCheckAsync(int animalId)
+    {
+        var animalToHaveItsHealthChecked = _animalRepository.GetById(animalId).Result;
+        if (animalToHaveItsHealthChecked == null)
+        {
+            throw new ArgumentException($"Animal with id {animalId} does not exist.");
+        }
+        animalToHaveItsHealthChecked.PerformHealthCheck(DateTime.UtcNow);
+        await _animalRepository.Save(animalToHaveItsHealthChecked);
     }
 }

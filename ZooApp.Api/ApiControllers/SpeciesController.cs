@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ZooApp.Application.Species;
 using ZooApp.Application.Species.Commands;
 using ZooApp.Domain.Species;
 
@@ -9,20 +10,26 @@ namespace ZooApp.Api.ApiControllers;
 public class SpeciesController
 {
 
-    private readonly ISpeciesRepository _speciesRepository;
+    private readonly ISpeciesCommandService _speciesCommandService;
+    private readonly ISpeciesQueryService _speciesQueryService;
 
-    public SpeciesController(ISpeciesRepository speciesRepository)
+    public SpeciesController(ISpeciesCommandService speciesCommandService, ISpeciesQueryService speciesQueryService)
     {
-        _speciesRepository = speciesRepository;
+        _speciesCommandService = speciesCommandService;
+        _speciesQueryService = speciesQueryService;
     }
 
     [HttpPost]
-    public Species CreateSpecies([FromBody] CreateSpeciesCommand command)
+    public async Task<Species> CreateSpecies([FromBody] CreateSpeciesCommand command)
     {
-        Enum.TryParse<AnimalKingdom>(command.Kingdom, ignoreCase: true, out var kingdomEnum);
-        var species = Species.CreateNew(command.Name, command.FeedingIntervalInHours, kingdomEnum);
-        
-        return _speciesRepository.SaveSpeciesAsync(species).Result;
+        return await _speciesCommandService.CreateSpeciesAsync(command);
     }
+
+    [HttpGet]
+    public async Task<List<Species>> GetAllSpecies()
+    {
+        return await _speciesQueryService.GetAllSpeciesAsync();
+    }
+
 
 }

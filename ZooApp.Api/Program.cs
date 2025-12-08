@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ZooApp.Infrastructure; 
-using ZooApp.Application; 
+using ZooApp.Application;
+using ZooApp.Infrastructure.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ var app = builder.Build();
 // Automatyczna migracja (brzydka, ale skuteczna w dev)
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<ZooApp.Infrastructure.Persistence.ZooDbContext>();
+    var db = scope.ServiceProvider.GetRequiredService<ZooDbContext>();
     db.Database.Migrate();
 }
 

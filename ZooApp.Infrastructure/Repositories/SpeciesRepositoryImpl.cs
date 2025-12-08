@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ZooApp.Domain.Species;
-using ZooApp.Infrastructure.Persistence;
+using ZooApp.Infrastructure.Persistance;
 
 namespace ZooApp.Infrastructure.Repositories;
 
@@ -25,6 +22,11 @@ public class SpeciesRepositoryImpl : ISpeciesRepository
     public async Task<List<Species>> GetAllSpeciesAsync()
     {
         return await _dbContext.Species.ToListAsync();
+    }
+
+    public async Task<Species> GetByIdAsync(int id)
+    {
+        return await _dbContext.Species.FindAsync(id);
     }
 
     public async Task<Species> SaveSpeciesAsync(Species species)

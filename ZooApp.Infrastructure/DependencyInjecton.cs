@@ -3,10 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using ZooApp.Infrastructure.Repositories;
 using ZooApp.Domain.Animal;
-using ZooApp.Infrastructure.Persistence;
-using ZooApp.Domain.Vet;
+using ZooApp.Domain.Vets;
 using ZooApp.Domain.ZooKeeper;
 using ZooApp.Domain.Species;
+using ZooApp.Infrastructure.Persistance;
 
 namespace ZooApp.Infrastructure;
 

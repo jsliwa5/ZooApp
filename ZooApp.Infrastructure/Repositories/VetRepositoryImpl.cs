@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using ZooApp.Domain.Vet;
-using ZooApp.Infrastructure.Persistence;
+using ZooApp.Domain.Vets;
+using ZooApp.Infrastructure.Persistance;
 
 namespace ZooApp.Infrastructure.Repositories;
 
@@ -17,13 +14,23 @@ public class VetRepositoryImpl : IVetRepository
         _context = context;
     }
 
-    public async Task Delete(Vet vet)
+    public async Task DeleteAsync(Vet vet)
     {
         _context.Vets.Remove(vet);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Vet?> GetVetById(int id)
+    public async Task<bool> ExistsByIdAsync(int id)
+    {
+        return await _context.Vets.AnyAsync(v => v.Id == id);
+    }
+
+    public async Task<List<Vet>> GetAllVetsAsync()
+    {
+        return await _context.Vets.AsNoTracking().ToListAsync();
+    }
+
+    public async Task<Vet?> GetVetByIdAsync(int id)
     {
         return await _context.Vets.FindAsync(id);
     }
@@ -44,7 +51,7 @@ public class VetRepositoryImpl : IVetRepository
             .ToListAsync();
     }
 
-    public async Task<Vet> Save(Vet vet)
+    public async Task<Vet> SaveAsync(Vet vet)
     {
         await _context.Vets.AddAsync(vet);
         return vet;

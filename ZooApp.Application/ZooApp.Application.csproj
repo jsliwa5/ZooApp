@@ -5,11 +5,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Animals\Results\" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+    <Folder Include="ZooKeeper\" />
   </ItemGroup>
 
   <PropertyGroup>
