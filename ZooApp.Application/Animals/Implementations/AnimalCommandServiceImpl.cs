@@ -44,4 +44,15 @@ public class AnimalCommandServiceImpl : IAnimalCommandService
             );
             
     }
+
+    public async Task FeedAnimalAsync(int animalId)
+    {
+        var animalToBeFed = _animalRepository.GetById(animalId).Result;
+        if (animalToBeFed == null)
+        {
+            throw new ArgumentException($"Animal with id {animalId} does not exist.");
+        }
+        animalToBeFed.Feed(DateTime.UtcNow);
+        await _animalRepository.Save(animalToBeFed);
+    }
 }

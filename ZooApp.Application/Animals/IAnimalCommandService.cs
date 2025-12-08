@@ -9,4 +9,5 @@ namespace ZooApp.Application.Animals;
 public interface IAnimalCommandService
 {
     AnimalResult CreateAnimal(CreateAnimalCommand command);
+    Task FeedAnimalAsync(int animalId);
 }

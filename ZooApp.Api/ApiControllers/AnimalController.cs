@@ -2,7 +2,6 @@
 using ZooApp.Application.Animals;
 using ZooApp.Application.Animals.Commands;
 using ZooApp.Application.Animals.Results;
-using ZooApp.Domain.Animal;
 
 namespace ZooApp.Api.ApiControllers;
 
@@ -11,13 +10,11 @@ namespace ZooApp.Api.ApiControllers;
 public class AnimalController
 {
 
-    private readonly IAnimalRepository _animalRepository;
     private readonly IAnimalCommandService _animalCommandService;
     private readonly IAnimalQueryService _animalQueryService;
 
-    public AnimalController(IAnimalRepository animalRepository, IAnimalCommandService animalCommandService, IAnimalQueryService animalQueryService)
+    public AnimalController(IAnimalCommandService animalCommandService, IAnimalQueryService animalQueryService)
     {
-        _animalRepository = animalRepository;
         _animalCommandService = animalCommandService;
         _animalQueryService = animalQueryService;
     }
