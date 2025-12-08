@@ -17,6 +17,10 @@ public class SpeciesRepositoryImpl : ISpeciesRepository
         _dbContext = dbContext;
     }
 
+    public async Task<bool> ExistsByIdAsync(int id)
+    {
+        return await _dbContext.Species.AnyAsync(s => s.Id == id);
+    }
 
     public async Task<List<Species>> GetAllSpeciesAsync()
     {

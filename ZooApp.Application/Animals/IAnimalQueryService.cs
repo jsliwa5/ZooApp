@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ZooApp.Application.Animals.Results;
 
 namespace ZooApp.Application.Animals;
 
-internal interface IAnimalQueryService
+public interface IAnimalQueryService
 {
+    AnimalResult getAnimalById(int id);
+    List<AnimalResult> getAllAnimals();
 }

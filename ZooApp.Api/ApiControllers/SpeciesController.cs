@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ZooApp.Application.Commands;
+using ZooApp.Application.Species.Commands;
 using ZooApp.Domain.Species;
 
 namespace ZooApp.Api.ApiControllers;

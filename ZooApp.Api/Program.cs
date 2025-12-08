@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using ZooApp.Infrastructure; 
-// using ZooApp.Application; 
+using ZooApp.Application; 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration);
-// builder.Services.AddApplication(); 
+builder.Services.AddApplication(); 
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -8,4 +8,6 @@ public interface ISpeciesRepository
 {
     Task<Species> SaveSpeciesAsync(Species species);
     Task <List<Species>> GetAllSpeciesAsync();
+
+    Task<bool> ExistsByIdAsync(int id);
 }
