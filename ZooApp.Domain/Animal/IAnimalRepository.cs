@@ -10,4 +10,5 @@ public interface IAnimalRepository
     Task<Animal> Save(Animal animal);
     Task Delete(Animal animal);
     Task<List<Animal>> GetAllAnimals();
+    Task<bool> ExistsByIdAsync(int id);
 }
