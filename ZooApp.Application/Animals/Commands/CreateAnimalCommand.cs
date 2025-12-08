@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ZooApp.Domain.Animal;
 
-namespace ZooApp.Application.Commands;
+namespace ZooApp.Application.Animals.Commands;
 
 public record CreateAnimalCommand
 {

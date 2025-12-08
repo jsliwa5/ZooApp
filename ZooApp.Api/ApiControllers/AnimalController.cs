@@ -1,15 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ZooApp.Application.Animals.Commands;
+using ZooApp.Domain.Animal;
 
 namespace ZooApp.Api.ApiControllers;
 
 [ApiController]
-[Route("api/animal")]
+[Route("api/animals")]
 public class AnimalController
 {
 
-    [HttpGet]
-    public string Get()
+    private readonly IAnimalRepository _animalRepository;
+
+    public AnimalController(IAnimalRepository animalRepository)
     {
-        return "Hello from AnimalController";
+        _animalRepository = animalRepository;
+    }
+
+    [HttpGet]
+    public List<Animal> GetAllAnimals()
+    {
+        return _animalRepository.GetAllAnimals().Result;
+    }
+
+    [HttpPost]
+    public Animal AddAnimal([FromBody] CreateAnimalCommand command) { 
+        
+        return _animalRepository.Save(Animal.CreateNew(command.Name, command.SpeciesId)).Result;
     }
 }
