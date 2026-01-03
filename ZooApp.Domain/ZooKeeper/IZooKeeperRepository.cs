@@ -8,7 +8,13 @@ namespace ZooApp.Domain.ZooKeeper;
 public interface IZooKeeperRepository
 {
     Task<ZooKeeper?> GetById(int id);
-    Task<int> DispatchTaskAutomatically(DateTime scheduledAt, TimeSpan duration, string description); //tu będzie funkcja/procedura składowana do bazy danych
+    Task CreateAndDispatchTaskAutomatically(
+        string description,
+        TimeSpan duration,
+        string taskType,
+        DateTime scheduledAt,     
+        int? animalId = null
+        ); 
     Task<ZooKeeper> Save(ZooKeeper zooKeeper);
     Task Delete(ZooKeeper zooKeeper);
     Task<List<ITask>> GetTasksForZooKeeper(int zooKeeperId);

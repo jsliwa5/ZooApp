@@ -178,6 +178,7 @@
       },
       "ZooApp.Application/1.0.0": {
         "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.0",
           "ZooApp.Domain": "1.0.0"
         },
         "runtime": {

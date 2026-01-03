@@ -4,6 +4,8 @@ using ZooApp.Application.Animals;
 using ZooApp.Application.Animals.Implementations;
 using ZooApp.Application.Species;
 using ZooApp.Application.Species.Implementations;
+using ZooApp.Application.ZooKeepers;
+using ZooApp.Application.ZooKeepers.Implementations;
 
 namespace ZooApp.Application;
 
@@ -16,6 +18,8 @@ public static class DependencyInjection
         services.AddScoped<ISpeciesQueryService, SpeciesQueryServiceImpl>();
         services.AddScoped<IAnimalCommandService, AnimalCommandServiceImpl>();
         services.AddScoped<IAnimalQueryService, AnimalQueryServiceImpl>();
+        services.AddScoped<IZooKeeperCommandService, ZooKeeperCommandServiceImpl>();
+        services.AddScoped <IZooKeeperQueryService, ZooKeeperQueryServiceImpl>();
 
         return services;
     }

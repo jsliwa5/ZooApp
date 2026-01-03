@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using ZooApp.Domain.ZooKeeper;
@@ -23,9 +24,25 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         await _context.SaveChangesAsync();
     }
 
-    public Task<int> DispatchTaskAutomatically(DateTime scheduledAt, TimeSpan duration, string description)
+    public async Task CreateAndDispatchTaskAutomatically(
+        string description,
+        TimeSpan duration,
+        string taskType,
+        DateTime scheduledAt,     
+        int? animalId = null
+        )
     {
-        throw new NotImplementedException();
+
+        await _context.Database.ExecuteSqlRawAsync(
+            "CALL sp_create_and_assign_task({0}, {1}, {2}, {3}, {4})",
+            description,
+            duration,
+            taskType,
+            scheduledAt,
+            animalId
+            );
+
+        
     }
 
     public async Task<ZooKeeper?> GetById(int id)

@@ -181,7 +181,6 @@ C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\staticwebasse
 C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\staticwebassets.development.json
 C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\swae.build.ex.cache
-C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\ZooApp.Api.csproj.Up2Date
 C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\ZooApp.Api.dll
 C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\refint\ZooApp.Api.dll

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ZooApp.Domain.Vets;
-using ZooApp.Domain.Vetss;
+
 
 namespace ZooApp.Infrastructure.Persistance.Configuration;
 

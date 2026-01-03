@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZooApp.Infrastructure.Persistance;
 
-
 #nullable disable
 
 namespace ZooApp.Infrastructure.Migrations
