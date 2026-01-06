@@ -50,14 +50,22 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         return await _context.ZooKeepers.FindAsync(id);
     }
 
-    public async Task<List<ITask>> GetTasksForZooKeeper(int zooKeeperId)
+    public async Task<List<AbstractTask>> GetTasksForZooKeeper(int zooKeeperId)
     {
-        return null; // To be implemented
+        return await _context.Set<AbstractTask>()
+        .Where(t => t.ZooKeeperId == zooKeeperId)
+        .OrderBy(t => t.ScheduledAt)
+        .ToListAsync();
     }
 
-    public Task<List<ITask>> GetTasksForZooKeeperForTheDate(int zooKeeperId, DateTime date)
+    public async Task<List<AbstractTask>> GetTasksForZooKeeperForThePeriodOfTime(int zooKeeperId, DateTime from, DateTime to)
     {
-        return null; // To be implemented
+        return await _context.Set<AbstractTask>()
+        .Where(t => t.ZooKeeperId == zooKeeperId
+                    && t.ScheduledAt >= from
+                    && t.ScheduledAt <= to)
+        .OrderBy(t => t.ScheduledAt)
+        .ToListAsync();
     }
 
     public async Task<ZooKeeper> Save(ZooKeeper zooKeeper)
@@ -65,5 +73,11 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         await _context.ZooKeepers.AddAsync(zooKeeper);
         await _context.SaveChangesAsync();
         return zooKeeper;
+    }
+
+    public async Task<bool> ExistById(int id)
+    {
+        
+        return await _context.ZooKeepers.AnyAsync(zk => zk.Id == id);
     }
 }

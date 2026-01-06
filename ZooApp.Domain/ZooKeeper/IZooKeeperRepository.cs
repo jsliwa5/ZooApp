@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZooApp.Domain.ZooKeeper.Tasks;
+﻿using ZooApp.Domain.ZooKeeper.Tasks;
 
 namespace ZooApp.Domain.ZooKeeper;
 
 public interface IZooKeeperRepository
 {
     Task<ZooKeeper?> GetById(int id);
+    Task<bool> ExistById(int id);
     Task CreateAndDispatchTaskAutomatically(
         string description,
         TimeSpan duration,
@@ -17,6 +15,6 @@ public interface IZooKeeperRepository
         ); 
     Task<ZooKeeper> Save(ZooKeeper zooKeeper);
     Task Delete(ZooKeeper zooKeeper);
-    Task<List<ITask>> GetTasksForZooKeeper(int zooKeeperId);
-    Task<List<ITask>> GetTasksForZooKeeperForTheDate(int zooKeeperId, DateTime date);
+    Task<List<AbstractTask>> GetTasksForZooKeeper(int zooKeeperId);
+    Task<List<AbstractTask>> GetTasksForZooKeeperForThePeriodOfTime(int zooKeeperId, DateTime form, DateTime to);
 }

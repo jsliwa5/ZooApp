@@ -14,12 +14,12 @@ public static class DependencyInjection
 
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<ISpeciesCommandService, SpeciesCommandServiceImpl>();
-        services.AddScoped<ISpeciesQueryService, SpeciesQueryServiceImpl>();
-        services.AddScoped<IAnimalCommandService, AnimalCommandServiceImpl>();
-        services.AddScoped<IAnimalQueryService, AnimalQueryServiceImpl>();
-        services.AddScoped<IZooKeeperCommandService, ZooKeeperCommandServiceImpl>();
-        services.AddScoped <IZooKeeperQueryService, ZooKeeperQueryServiceImpl>();
+        services.AddScoped< ISpeciesCommandService,     SpeciesCommandServiceImpl   >();
+        services.AddScoped< ISpeciesQueryService,       SpeciesQueryServiceImpl     >();
+        services.AddScoped< IAnimalCommandService,      AnimalCommandServiceImpl    >();
+        services.AddScoped< IAnimalQueryService,        AnimalQueryServiceImpl      >();
+        services.AddScoped< IZooKeeperCommandService,   ZooKeeperCommandServiceImpl >();
+        services.AddScoped< IZooKeeperQueryService,     ZooKeeperQueryServiceImpl   >();
 
         return services;
     }

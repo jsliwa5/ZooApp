@@ -1,5 +1,6 @@
 ﻿using ZooApp.Application.ZooKeepers.Results;
 using ZooApp.Domain.ZooKeeper;
+using ZooApp.Domain.ZooKeeper.Tasks;
 
 namespace ZooApp.Application.ZooKeepers.Implementations;
 
@@ -11,6 +12,36 @@ public class ZooKeeperQueryServiceImpl : IZooKeeperQueryService
     public ZooKeeperQueryServiceImpl(IZooKeeperRepository zooKeeperRepository)
     {
         _zooKeeperRepository = zooKeeperRepository;
+    }
+
+    public async Task<List<TaskResult>> GetTaskForZooKeeperAsync(int id, DateTime? from, DateTime? to)
+    {
+        if(!await _zooKeeperRepository.ExistById(id))
+        {
+            throw new Exception($"ZooKeeper with id {id} does not exist.");
+        }
+
+        var tasks = new List<AbstractTask>();
+
+        if ( (from is null) || (to is null))
+        {
+            tasks = await _zooKeeperRepository.GetTasksForZooKeeper(id);
+        }
+        else
+        {
+            tasks = await _zooKeeperRepository.GetTasksForZooKeeperForThePeriodOfTime(id, from.Value, to.Value);
+        }
+
+        return tasks.Select(t => new TaskResult(
+                t.Id,
+                t.ScheduledAt,
+                t.Duration,
+                t.Description,
+                t.IsCompleted,
+                t.GetType().Name,
+                t is AnimalRelatedTask animalTask ? animalTask.AnimalId : null
+            )
+        ).ToList();
     }
 
     public async Task<ZooKeeperResult> GetZooKeeperByIdAsync(int id)

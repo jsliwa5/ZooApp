@@ -32,4 +32,21 @@ public class ZooKeeperController
         return await _zooKeeperQueryService.GetZooKeeperByIdAsync(id);
     }
 
+    [HttpPost]
+    [Route("tasks/auto")]
+    public async Task CreateAndAsignTaskAutomatically(AsignTaskCommand command)
+    {
+        await _zooKeeperCommandService.AsignTaskAutomatically(command);
+    }
+
+    [HttpGet]
+    [Route("{id}/tasks")]
+    public async Task<List<TaskResult>> GetTasksForZooKeeper(
+        [FromRoute] int id,
+        [FromQuery] DateTime? from,
+        [FromQuery] DateTime? to
+        )
+    {
+        return await _zooKeeperQueryService.GetTaskForZooKeeperAsync(id, from, to);
+    }
 }

@@ -33,5 +33,16 @@ public class ZooKeeperCommandServiceImpl : IZooKeeperCommandService
             ); 
     }
 
+    public async Task AsignTaskAutomatically(AsignTaskCommand command)
+    {
 
+        await _zooKeeperRepository.CreateAndDispatchTaskAutomatically(
+                command.Description,
+                command.Duration,
+                command.TaskType,
+                command.ScheduledAt,
+                command.AnimalId
+            );
+
+    }
 }
