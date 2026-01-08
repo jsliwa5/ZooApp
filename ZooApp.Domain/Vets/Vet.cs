@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ZooApp.Domain.Vets;
-
-namespace ZooApp.Domain.Vets;
+﻿namespace ZooApp.Domain.Vets;
 
 public class Vet
 {
@@ -16,11 +11,13 @@ public class Vet
     private readonly List<Visit> _visits = new();
     public IReadOnlyCollection<Visit> Visits => _visits.AsReadOnly();
 
+    public Guid UserId { get; private set; }
+
     //for ORM
     protected Vet() { }
 
     //for creating new
-    private Vet(string firstName, string lastName, int monthlyHoursLimit)
+    private Vet(string firstName, string lastName, int monthlyHoursLimit, Guid userId)
     {
 
         if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentNullException(nameof(firstName));
@@ -30,29 +27,33 @@ public class Vet
         FirstName = firstName;
         LastName = lastName;
         MonthlyHoursLimit = monthlyHoursLimit;
+        UserId = userId;
     }
 
-    private Vet(int id, string firstName, string lastName, int monthlyHoursLimit, List<Visit> visits) 
-        : this(firstName, lastName, monthlyHoursLimit)
+    //for restoring
+    private Vet(int id, string firstName, string lastName, int monthlyHoursLimit, List<Visit> visits, Guid userId) 
+        : this(firstName, lastName, monthlyHoursLimit, userId)
     {
         Id = id;
         _visits = visits;
     }
 
-    public static Vet CreateNew(string firstName, string lastName, int monthlyHoursLimit)
+    public static Vet CreateNew(string firstName, string lastName, int monthlyHoursLimit, Guid userId)
     {
-        return new Vet(firstName, lastName, monthlyHoursLimit);
+        return new Vet(firstName, lastName, monthlyHoursLimit, userId);
+        
     }
 
     public static Vet restore(int id, string firstName, string lastName,
-        int monthlyHoursLimit, List<Visit> visits)
+        int monthlyHoursLimit, List<Visit> visits, Guid userId)
     {
         return new Vet(
                 id,
                 firstName,
                 lastName,
                 monthlyHoursLimit,
-                visits
+                visits,
+                userId
             );
         
     }

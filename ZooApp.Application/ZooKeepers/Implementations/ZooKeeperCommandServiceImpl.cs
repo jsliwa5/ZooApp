@@ -14,24 +14,24 @@ public class ZooKeeperCommandServiceImpl : IZooKeeperCommandService
         _zooKeeperRepository = zooKeeperRepository;
     }
 
-    public async Task<ZooKeeperResult> addZooKeeperAsync(CreateZooKeeperCommand command)
-    {
+    //public async Task<ZooKeeperResult> addZooKeeperAsync(CreateZooKeeperCommand command)
+    //{
 
-        var zooKeeperToBeAdded = ZooKeeper.CreateNew(
-            command.FirstName,
-            command.LastName,
-            command.MonthlyHoursLimit
-        );
+    //    var zooKeeperToBeAdded = ZooKeeper.CreateNew(
+    //        command.FirstName,
+    //        command.LastName,
+    //        command.MonthlyHoursLimit
+    //    );
 
-        var savedZooKeeper = await _zooKeeperRepository.Save(zooKeeperToBeAdded);
+    //    var savedZooKeeper = await _zooKeeperRepository.Save(zooKeeperToBeAdded);
 
-        return new ZooKeeperResult(
-                savedZooKeeper.Id,
-                savedZooKeeper.FirstName,
-                savedZooKeeper.LastName,
-                savedZooKeeper.MonthlyHoursLimit
-            ); 
-    }
+    //    return new ZooKeeperResult(
+    //            savedZooKeeper.Id,
+    //            savedZooKeeper.FirstName,
+    //            savedZooKeeper.LastName,
+    //            savedZooKeeper.MonthlyHoursLimit
+    //        ); 
+    //}
 
     public async Task AsignTaskAutomatically(AsignTaskCommand command)
     {

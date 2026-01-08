@@ -187,3 +187,12 @@ C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\refint\ZooApp
 C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\ZooApp.Api.pdb
 C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\ZooApp.Api.genruntimeconfig.cache
 C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\obj\Debug\net10.0\ref\ZooApp.Api.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\kubal\Desktop\projektDotnet2\ZooApp.Api\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll

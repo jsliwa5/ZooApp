@@ -17,11 +17,17 @@ public class VetConfiguration : IEntityTypeConfiguration<Vet>
         builder.Property(v => v.FirstName).IsRequired().HasMaxLength(100);
         builder.Property(v => v.LastName).IsRequired().HasMaxLength(100);
 
+        builder.Property(v => v.UserId)
+            .IsRequired();
+
+        builder.HasIndex(v => v.UserId)
+            .IsUnique();
+
         builder.HasMany(v => v.Visits)
-            .WithOne() 
+            .WithOne()
             .HasForeignKey(visit => visit.VetId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade); 
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.Metadata.FindNavigation(nameof(Vet.Visits))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);

@@ -17,22 +17,22 @@ public class VetCommandServiceImpl : IVetCommandService
         _animalRepository = animalRepository;
     }
 
-    public async Task<VetResult> AddVetAsync(CreateVetCommand command)
-    {
-        var vetToBeSaved = Vet.CreateNew(
-            command.FirstName,
-            command.LastName,
-            command.MonthlyHoursLimit);
+    //public async Task<VetResult> AddVetAsync(CreateVetCommand command)
+    //{
+    //    var vetToBeSaved = Vet.CreateNew(
+    //        command.FirstName,
+    //        command.LastName,
+    //        command.MonthlyHoursLimit);
 
-        var savedVet = await _vetRepository.SaveAsync(vetToBeSaved);
+    //    var savedVet = await _vetRepository.SaveAsync(vetToBeSaved);
 
-        return new VetResult(
-            savedVet.Id,
-            savedVet.FirstName,
-            savedVet.LastName,
-            savedVet.MonthlyHoursLimit
-            ); 
-    }
+    //    return new VetResult(
+    //        savedVet.Id,
+    //        savedVet.FirstName,
+    //        savedVet.LastName,
+    //        savedVet.MonthlyHoursLimit
+    //        ); 
+    //}
 
     public async Task ScheduleVisitAsync(int vetId, ScheduleVisitCommand command)
     {

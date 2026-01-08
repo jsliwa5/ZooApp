@@ -19,11 +19,11 @@ public class ZooKeeperController
         _zooKeeperCommandService = zooKeeperCommandService;
     }
 
-    [HttpPost]
-    public async Task<ZooKeeperResult> AddZooKeeper([FromBody] CreateZooKeeperCommand command)
-    {
-        return await _zooKeeperCommandService.addZooKeeperAsync(command);
-    }
+    //[HttpPost]
+    //public async Task<ZooKeeperResult> AddZooKeeper([FromBody] CreateZooKeeperCommand command)
+    //{
+    //    return await _zooKeeperCommandService.addZooKeeperAsync(command);
+    //}
 
     [HttpGet]
     [Route("{id}")]

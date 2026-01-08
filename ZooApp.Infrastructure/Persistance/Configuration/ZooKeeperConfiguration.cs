@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ZooApp.Domain.ZooKeeper;
-using ZooApp.Domain.ZooKeeper.Tasks;
+
 
 public class ZooKeeperConfiguration : IEntityTypeConfiguration<ZooKeeper>
 {
@@ -11,7 +11,13 @@ public class ZooKeeperConfiguration : IEntityTypeConfiguration<ZooKeeper>
         builder.Property(z => z.FirstName).IsRequired();
         builder.Property(z => z.LastName).IsRequired();
 
-        builder.HasMany(z => z.Tasks) // Mapujemy publiczną właściwość!
+        builder.Property(z => z.UserId)
+            .IsRequired();
+
+        builder.HasIndex(z => z.UserId)
+            .IsUnique();
+
+        builder.HasMany(z => z.Tasks)
             .WithOne()
             .HasForeignKey(t => t.ZooKeeperId)
             .IsRequired()
@@ -20,4 +26,5 @@ public class ZooKeeperConfiguration : IEntityTypeConfiguration<ZooKeeper>
         builder.Navigation(z => z.Tasks)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
     }
+  
 }

@@ -32,11 +32,11 @@ public class VetController
         return await _vetQueryService.GetVetByIdAsync(id);
     }
 
-    [HttpPost]
-    public async Task<VetResult> AddVet([FromBody] CreateVetCommand command)
-    {
-        return await _vetCommandService.AddVetAsync(command);
-    }
+    //[HttpPost]
+    //public async Task<VetResult> AddVet([FromBody] CreateVetCommand command)
+    //{
+    //    return await _vetCommandService.AddVetAsync(command);
+    //}
 
     [HttpPost]
     [Route("{vetId}/schedule-visit")]

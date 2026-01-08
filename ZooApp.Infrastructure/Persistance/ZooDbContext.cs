@@ -1,17 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ZooApp.Domain.Animal;
 using ZooApp.Domain.Species;
 using ZooApp.Domain.Vets;
 using ZooApp.Domain.ZooKeeper;
 using ZooApp.Domain.ZooKeeper.Tasks;
+using ZooApp.Infrastructure.Identity;
 
 namespace ZooApp.Infrastructure.Persistance;
 
-public class ZooDbContext : DbContext
+public class ZooDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
-    public ZooDbContext(DbContextOptions<ZooDbContext> options) : base(options) { }
+    public ZooDbContext(DbContextOptions<ZooDbContext> options) : base(options)
+    {
+    }
 
-     public DbSet<Animal> Animals { get; set; }
+    public DbSet<Animal> Animals { get; set; }
     public DbSet<Species> Species { get; set; }
     public DbSet<Vet> Vets { get; set; }
     //public DbSet<Visit> Visits { get; set; } //disabled to enforce aggregate root
@@ -21,6 +26,7 @@ public class ZooDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ZooDbContext).Assembly);
     }
 

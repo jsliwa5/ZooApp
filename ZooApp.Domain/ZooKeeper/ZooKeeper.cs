@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZooApp.Domain.ZooKeeper.Tasks;
+﻿using ZooApp.Domain.ZooKeeper.Tasks;
 
 namespace ZooApp.Domain.ZooKeeper;
 
@@ -16,9 +13,11 @@ public class ZooKeeper
     private List<AbstractTask> _tasks;
     public IReadOnlyCollection<AbstractTask> Tasks => _tasks.AsReadOnly();
 
+    public Guid UserId { get; private set; }
+
 
     //for creating new
-    private ZooKeeper(string firstName, string lastName, int monthlyHoursLimit)
+    private ZooKeeper(string firstName, string lastName, int monthlyHoursLimit, Guid userId)
     {
 
         if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentNullException(nameof(firstName));
@@ -27,25 +26,26 @@ public class ZooKeeper
         FirstName = firstName;
         LastName = lastName;
         MonthlyHoursLimit = monthlyHoursLimit;
+        UserId = userId;
         _tasks = new List<AbstractTask>();
     }
 
     //for restoring
-    private ZooKeeper(int id, string firstName, string lastName, int monthlyHoursLimit, List<AbstractTask> tasks)
-        : this(firstName, lastName, monthlyHoursLimit)
+    private ZooKeeper(int id, string firstName, string lastName, int monthlyHoursLimit, List<AbstractTask> tasks, Guid userId)
+        : this(firstName, lastName, monthlyHoursLimit, userId)
     {
 
         Id = id;
         _tasks = tasks;
     }
 
-    public static ZooKeeper CreateNew(string firstName, string lastName, int monthlyHoursLimit)
+    public static ZooKeeper CreateNew(string firstName, string lastName, int monthlyHoursLimit, Guid userId)
     {
-        return new ZooKeeper(firstName, lastName, monthlyHoursLimit);
+        return new ZooKeeper(firstName, lastName, monthlyHoursLimit, userId);
     }
 
     public static ZooKeeper Restore(int id, string firstName, string lastName,
-        int monthlyHoursLimit, List<AbstractTask> tasks)
+        int monthlyHoursLimit, List<AbstractTask> tasks, Guid userId)
     {
 
         return new ZooKeeper(
@@ -53,7 +53,8 @@ public class ZooKeeper
                 firstName,
                 lastName,
                 monthlyHoursLimit,
-                tasks
+                tasks,
+                userId
             );
     }
 
