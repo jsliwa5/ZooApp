@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZooApp.Application.Auth;
+using ZooApp.Domain.Vets;
 using ZooApp.Domain.ZooKeeper;
 using ZooApp.Infrastructure.Persistance;
 
@@ -16,14 +17,16 @@ public class AuthServiceImpl : IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole<Guid>> _roleManager;
     private readonly IZooKeeperRepository _zooKeeperRepository;
+    private readonly IVetRepository _vetRepository;
     private readonly ZooDbContext _context; 
     private readonly IConfiguration _configuration; 
 
-    public AuthServiceImpl(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager, IZooKeeperRepository zooKeeperRepository, ZooDbContext context, IConfiguration configuration)
+    public AuthServiceImpl(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager, IZooKeeperRepository zooKeeperRepository, IVetRepository vetRepository, ZooDbContext context, IConfiguration configuration)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _zooKeeperRepository = zooKeeperRepository;
+        _vetRepository = vetRepository;
         _context = context;
         _configuration = configuration;
     }
@@ -90,8 +93,33 @@ public class AuthServiceImpl : IAuthService
         await _userManager.AddToRoleAsync(user, roleName);
     }
 
-    public Task RegisterVetAsync(string email, string password, string firstName, string lastName, string specialization)
+    public async Task RegisterVetAsync(string email, string password, string firstName, string lastName, int monthlyHoursLimit)
     {
-        throw new NotImplementedException();
+        using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            var user = new ApplicationUser
+            {
+                UserName = email,
+                Email = email
+            };
+
+            var result = await _userManager.CreateAsync(user, password);
+
+            if (!result.Succeeded)
+                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+
+            await AddToRoleAsync(user, "Vet");
+
+            var vet = Vet.CreateNew(firstName, lastName, monthlyHoursLimit, user.Id);
+            await _vetRepository.SaveAsync(vet);
+
+            await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 }
