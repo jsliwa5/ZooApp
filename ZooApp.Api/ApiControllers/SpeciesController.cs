@@ -31,5 +31,12 @@ public class SpeciesController
         return await _speciesQueryService.GetAllSpeciesAsync();
     }
 
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<Species> GetSpeciesById([FromQuery] int id)
+    {
+        return await _speciesQueryService.GetSpeciesByIdAsync(id);
+    }
+
 
 }

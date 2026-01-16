@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZooApp.Domain.Animal;
-
-namespace ZooApp.Domain.Species;
+﻿namespace ZooApp.Domain.Species;
 
 public enum AnimalKingdom
 {

@@ -23,7 +23,7 @@ public class ZooKeeperController
     //public async Task<ZooKeeperResult> AddZooKeeper([FromBody] CreateZooKeeperCommand command)
     //{
     //    return await _zooKeeperCommandService.addZooKeeperAsync(command);
-    //}
+    //} //disabled since now zookeepers are created by registering
 
     [HttpGet]
     [Route("{id}")]

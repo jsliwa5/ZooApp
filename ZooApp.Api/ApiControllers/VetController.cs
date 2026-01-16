@@ -36,7 +36,7 @@ public class VetController
     //public async Task<VetResult> AddVet([FromBody] CreateVetCommand command)
     //{
     //    return await _vetCommandService.AddVetAsync(command);
-    //}
+    //} //disabled since now vets are created by registering
 
     [HttpPost]
     [Route("{vetId}/schedule-visit")]
