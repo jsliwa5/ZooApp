@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ZooApp.Application.Vets;
 using ZooApp.Application.Vets.Commands;
 using ZooApp.Application.Vets.Results;
@@ -20,6 +21,7 @@ public class VetController
     }
 
     [HttpGet]
+    [Authorize(Roles = "Manager, Vet")]
     public async Task<List<VetResult>> GetVets()
     {
         return await _vetQueryService.GetAllVetsAsync();
@@ -27,6 +29,7 @@ public class VetController
 
     [HttpGet]
     [Route("{id}")]
+    [Authorize(Roles = "Manager, Vet")]
     public async Task<VetResult> GetVetById([FromRoute] int id)
     {
         return await _vetQueryService.GetVetByIdAsync(id);
@@ -40,6 +43,7 @@ public class VetController
 
     [HttpPost]
     [Route("{vetId}/schedule-visit")]
+    [Authorize(Roles = "Manager")]
     public async Task ScheduleVisit([FromRoute] int vetId, [FromBody] ScheduleVisitCommand command)
     {
         await _vetCommandService.ScheduleVisitAsync(vetId, command);

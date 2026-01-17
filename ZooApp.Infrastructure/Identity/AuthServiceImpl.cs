@@ -54,7 +54,7 @@ public class AuthServiceImpl : IAuthService
             _configuration["Jwt:Audience"],
             claims,
             //expires: DateTime.Now.AddDays(1),
-            expires: DateTime.Now.AddMinutes(1),
+            expires: DateTime.Now.AddDays(1),
             signingCredentials: creds
         );
 

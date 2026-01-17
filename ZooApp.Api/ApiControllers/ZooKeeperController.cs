@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ZooApp.Application.ZooKeepers;
 using ZooApp.Application.ZooKeepers.Commands;
 using ZooApp.Application.ZooKeepers.Results;
@@ -27,6 +28,7 @@ public class ZooKeeperController
 
     [HttpGet]
     [Route("{id}")]
+    [Authorize(Roles = "ZooKeeper, Manager")]
     public async Task<ZooKeeperResult> GetZooKeeperById([FromRoute] int id)
     {
         return await _zooKeeperQueryService.GetZooKeeperByIdAsync(id);
@@ -34,6 +36,7 @@ public class ZooKeeperController
 
     [HttpPost]
     [Route("tasks/auto")]
+    [Authorize(Roles = "Manager")]
     public async Task CreateAndAsignTaskAutomatically(AsignTaskCommand command)
     {
         await _zooKeeperCommandService.AsignTaskAutomatically(command);
@@ -41,6 +44,7 @@ public class ZooKeeperController
 
     [HttpGet]
     [Route("{id}/tasks")]
+    [Authorize(Roles = "ZooKeeper, Manager")]
     public async Task<List<TaskResult>> GetTasksForZooKeeper(
         [FromRoute] int id,
         [FromQuery] DateTime? from,

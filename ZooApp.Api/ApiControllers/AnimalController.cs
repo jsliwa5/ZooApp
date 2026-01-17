@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ZooApp.Application.Animals;
 using ZooApp.Application.Animals.Commands;
 using ZooApp.Application.Animals.Results;
@@ -21,6 +22,7 @@ public class AnimalController : ControllerBase
 
 
     [HttpGet]
+    [Authorize(Roles = "ZooKeeper, Manager")]
     public List<AnimalResult> GetAllAnimals()
     {
         return _animalQueryService.getAllAnimals();
@@ -28,13 +30,15 @@ public class AnimalController : ControllerBase
 
 
     [HttpPost]
-    public AnimalResult AddAnimal([FromBody] CreateAnimalCommand command) { 
+    [Authorize(Roles = "Manager")]
+    public async Task<AnimalResult> AddAnimal([FromBody] CreateAnimalCommand command) { 
         
-        return _animalCommandService.CreateAnimal(command);
+        return await _animalCommandService.CreateAnimalAsync(command);
     }
 
 
     [HttpGet]
+    [Authorize(Roles = "ZooKeeper, Manager")]
     [Route("{id}")]
     public AnimalResult GetAnimalById([FromRoute] int id)
     {
@@ -43,6 +47,7 @@ public class AnimalController : ControllerBase
 
 
     [HttpPost("{id}/feed")]
+    [Authorize(Roles = "ZooKeeper")]
     public async Task<IActionResult> Feed([FromRoute] int id)
     {
         await _animalCommandService.FeedAnimalAsync(id);
@@ -50,6 +55,7 @@ public class AnimalController : ControllerBase
     }
 
     [HttpPost("{id}/healthcheck")]
+    [Authorize(Roles = "Vet")]
     public async Task<IActionResult> PerformHealthCheck([FromRoute] int id)
     {
         await _animalCommandService.PerformHealthCheckAsync(id);
@@ -57,6 +63,7 @@ public class AnimalController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Manager")]
     public async Task<IActionResult> DeleteAnimal([FromRoute] int id)
     {
         await _animalCommandService.DeleteByIdAsync(id);

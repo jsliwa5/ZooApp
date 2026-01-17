@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ZooApp.Application.Species;
 using ZooApp.Application.Species.Commands;
 using ZooApp.Domain.Species;
@@ -20,12 +21,14 @@ public class SpeciesController
     }
 
     [HttpPost]
+    [Authorize(Roles = "Manager")]
     public async Task<Species> CreateSpecies([FromBody] CreateSpeciesCommand command)
     {
         return await _speciesCommandService.CreateSpeciesAsync(command);
     }
 
     [HttpGet]
+    [Authorize(Roles = "ZooKeeper, Manager, Vet")]
     public async Task<List<Species>> GetAllSpecies()
     {
         return await _speciesQueryService.GetAllSpeciesAsync();
@@ -33,6 +36,7 @@ public class SpeciesController
 
     [HttpGet]
     [Route("{id}")]
+    [Authorize(Roles = "ZooKeeper, Manager, Vet")]
     public async Task<Species> GetSpeciesById([FromQuery] int id)
     {
         return await _speciesQueryService.GetSpeciesByIdAsync(id);

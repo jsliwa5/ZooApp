@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZooApp.Application.Animals;
-using ZooApp.Application.Animals.Commands;
+﻿using ZooApp.Application.Animals.Commands;
 using ZooApp.Application.Animals.Results;
 using ZooApp.Domain.Animal;
 using ZooApp.Domain.Species;
@@ -21,19 +17,23 @@ public class AnimalCommandServiceImpl : IAnimalCommandService
     }
 
 
-    public AnimalResult CreateAnimal(CreateAnimalCommand command)
+    public async Task<AnimalResult> CreateAnimalAsync(CreateAnimalCommand command)
     {
-        if(_speciesRepository.ExistsByIdAsync(command.SpeciesId).Result)
+
+        var speciesExists = await _speciesRepository.ExistsByIdAsync(command.SpeciesId);
+        //Console.WriteLine($"Species exists: {speciesExists}");
+
+        if (!speciesExists)
         {
             throw new ArgumentException($"Species with id {command.SpeciesId} does not exist.");
         }
 
-        var savedAnimal = _animalRepository.Save(
+        var savedAnimal = await _animalRepository.Save(
                 Animal.CreateNew(
                     command.Name,
                     command.SpeciesId
                 )
-            ).Result;
+            );
 
         return new AnimalResult(
             savedAnimal.Id,
