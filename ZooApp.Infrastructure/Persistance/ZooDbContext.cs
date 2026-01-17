@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ZooApp.Domain.Animal;
+using ZooApp.Domain.Managers;
 using ZooApp.Domain.Species;
 using ZooApp.Domain.Vets;
 using ZooApp.Domain.ZooKeeper;
@@ -21,6 +22,7 @@ public class ZooDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid
     public DbSet<Vet> Vets { get; set; }
     //public DbSet<Visit> Visits { get; set; } //disabled to enforce aggregate root
     public DbSet<ZooKeeper> ZooKeepers { get; set; }
+    public DbSet<Manager> Managers { get; set; }
 
     public DbSet<AbstractTask> Tasks { get; set; }
 

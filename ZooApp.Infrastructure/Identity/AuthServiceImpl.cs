@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZooApp.Application.Auth;
+using ZooApp.Domain.Managers;
 using ZooApp.Domain.Vets;
 using ZooApp.Domain.ZooKeeper;
 using ZooApp.Infrastructure.Persistance;
@@ -18,15 +19,17 @@ public class AuthServiceImpl : IAuthService
     private readonly RoleManager<IdentityRole<Guid>> _roleManager;
     private readonly IZooKeeperRepository _zooKeeperRepository;
     private readonly IVetRepository _vetRepository;
+    private readonly IManagerRepository _managerRepository;
     private readonly ZooDbContext _context; 
-    private readonly IConfiguration _configuration; 
+    private readonly IConfiguration _configuration;
 
-    public AuthServiceImpl(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager, IZooKeeperRepository zooKeeperRepository, IVetRepository vetRepository, ZooDbContext context, IConfiguration configuration)
+    public AuthServiceImpl(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<Guid>> roleManager, IZooKeeperRepository zooKeeperRepository, IVetRepository vetRepository, IManagerRepository managerRepository, ZooDbContext context, IConfiguration configuration)
     {
         _userManager = userManager;
         _roleManager = roleManager;
         _zooKeeperRepository = zooKeeperRepository;
         _vetRepository = vetRepository;
+        _managerRepository = managerRepository;
         _context = context;
         _configuration = configuration;
     }
@@ -66,19 +69,20 @@ public class AuthServiceImpl : IAuthService
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Email, user.Email!),
             
         };
         foreach (var role in roles) claims.Add(new Claim(ClaimTypes.Role, role));
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
             _configuration["Jwt:Issuer"],
             _configuration["Jwt:Audience"],
             claims,
-            expires: DateTime.Now.AddDays(1),
+            //expires: DateTime.Now.AddDays(1),
+            expires: DateTime.Now.AddMinutes(1),
             signingCredentials: creds
         );
 
@@ -113,6 +117,38 @@ public class AuthServiceImpl : IAuthService
 
             var vet = Vet.CreateNew(firstName, lastName, monthlyHoursLimit, user.Id);
             await _vetRepository.SaveAsync(vet);
+
+            await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+    }
+
+    public async Task RegisterManagerAsync(string email, string password, string firstName, string lastName)
+    {
+        using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+           
+            var user = new ApplicationUser
+            {
+                UserName = email,
+                Email = email
+            };
+
+            var result = await _userManager.CreateAsync(user, password);
+
+            if (!result.Succeeded)
+                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+
+            await AddToRoleAsync(user, "Manager");
+
+            var manager = Manager.CreateNew(firstName, lastName, user.Id);
+
+            await _managerRepository.SaveAsync(manager);
 
             await transaction.CommitAsync();
         }
