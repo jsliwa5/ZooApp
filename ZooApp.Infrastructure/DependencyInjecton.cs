@@ -7,6 +7,7 @@ using ZooApp.Domain.Vets;
 using ZooApp.Domain.ZooKeeper;
 using ZooApp.Domain.Species;
 using ZooApp.Infrastructure.Persistance;
+using ZooApp.Domain.Managers;
 
 namespace ZooApp.Infrastructure;
 
@@ -26,6 +27,8 @@ public static class DependencyInjection
         services.AddScoped<IZooKeeperRepository, ZooKeeperRepositoryImpl>();
 
         services.AddScoped<ISpeciesRepository, SpeciesRepositoryImpl>();
+
+        services.AddScoped<IManagerRepository, ManagerRepositoryImpl>();
 
         return services;
     }

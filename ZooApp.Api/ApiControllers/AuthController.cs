@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ZooApp.Application.Auth;
 using ZooApp.Application.Auth.Commands;
+using ZooApp.Application.Auth.Results;
 
 namespace ZooApp.Api.ApiControllers;
 
@@ -17,11 +18,9 @@ public class AuthController : Controller
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login(LoginCommand command)
+    public async Task<AuthResult> Login(LoginCommand command)
     {
-        return await _authService.LoginAsync(command.Email, command.Password) is { } result
-            ? Ok(result)
-            : Unauthorized();
+        return await _authService.LoginAsync(command.Email, command.Password); 
     }
 
     [HttpPost]
@@ -37,6 +36,14 @@ public class AuthController : Controller
     public async Task<IActionResult> RegisterVet(RegisterVetCommand command)
     {
         await _authService.RegisterVetAsync(command.Email, command.Password, command.FirstName, command.LastName, command.HoursLimit);
+        return Ok();
+    }
+
+    [HttpPost]
+    [Route("register/manager")]
+    public async Task<IActionResult> RegisterManager(RegisterManagerCommand command)
+    {
+        await _authService.RegisterManagerAsync(command.Email, command.Password, command.FirstName, command.LastName);
         return Ok();
     }
 

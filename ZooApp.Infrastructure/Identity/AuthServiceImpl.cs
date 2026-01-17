@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZooApp.Application.Auth;
+using ZooApp.Application.Auth.Results;
 using ZooApp.Domain.Managers;
 using ZooApp.Domain.Vets;
 using ZooApp.Domain.ZooKeeper;
@@ -34,6 +36,31 @@ public class AuthServiceImpl : IAuthService
         _configuration = configuration;
     }
 
+    private string GenerateJwtToken(ApplicationUser user, IList<string> roles)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Email, user.Email!),
+
+        };
+        foreach (var role in roles) claims.Add(new Claim(ClaimTypes.Role, role));
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            _configuration["Jwt:Issuer"],
+            _configuration["Jwt:Audience"],
+            claims,
+            //expires: DateTime.Now.AddDays(1),
+            expires: DateTime.Now.AddMinutes(1),
+            signingCredentials: creds
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
     public async Task RegisterZooKeeperAsync(string email, string password, string firstName, string lastName, int hoursLimit)
     {
         using var transaction = await _context.Database.BeginTransactionAsync();
@@ -58,35 +85,62 @@ public class AuthServiceImpl : IAuthService
         }
     }
 
-    public async Task<string> LoginAsync(string email, string password)
+    public async Task<AuthResult> LoginAsync(string email, string password)
     {
         var user = await _userManager.FindByEmailAsync(email);
         if (user == null || !await _userManager.CheckPasswordAsync(user, password))
             throw new Exception("Invalid credentials");
 
         var roles = await _userManager.GetRolesAsync(user);
+        var role = roles.FirstOrDefault() ?? "User"; 
 
-        var claims = new List<Claim>
+        int? domainId = null;
+        string firstName = "";
+        string lastName = "";
+
+        if (role == "ZooKeeper")
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email!),
-            
-        };
-        foreach (var role in roles) claims.Add(new Claim(ClaimTypes.Role, role));
+            var keeper = await _context.ZooKeepers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(z => z.UserId == user.Id);
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            if (keeper != null)
+            {
+                domainId = keeper.Id;
+                firstName = keeper.FirstName;
+                lastName = keeper.LastName;
+            }
+        }
+        else if (role == "Vet")
+        {
+            var vet = await _context.Vets 
+                .AsNoTracking()
+                .FirstOrDefaultAsync(v => v.UserId == user.Id);
 
-        var token = new JwtSecurityToken(
-            _configuration["Jwt:Issuer"],
-            _configuration["Jwt:Audience"],
-            claims,
-            //expires: DateTime.Now.AddDays(1),
-            expires: DateTime.Now.AddMinutes(1),
-            signingCredentials: creds
-        );
+            if (vet != null)
+            {
+                domainId = vet.Id;
+                firstName = vet.FirstName;
+                lastName = vet.LastName;
+            }
+        }
+        else if (role == "Manager")
+        {
+            var manager = await _context.Managers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.UserId == user.Id);
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+            if (manager != null)
+            {
+                domainId = manager.Id;
+                firstName = manager.FirstName;
+                lastName = manager.LastName;
+            }
+        }
+
+        var tokenString = GenerateJwtToken(user, roles);
+
+        return new AuthResult(tokenString, role, domainId, firstName, lastName);
     }
 
     private async Task AddToRoleAsync(ApplicationUser user, string roleName)
