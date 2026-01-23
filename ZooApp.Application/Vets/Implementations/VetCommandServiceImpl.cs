@@ -2,6 +2,7 @@
 using ZooApp.Application.Vets.Results;
 using ZooApp.Domain.Animal;
 using ZooApp.Domain.Vets;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZooApp.Application.Vets.Implementations;
 
@@ -49,9 +50,13 @@ public class VetCommandServiceImpl : IVetCommandService
             throw new KeyNotFoundException($"Vet with id {vetId} does not exist.");
         }
 
+        var scheduledAtUtc = command.ScheduledAt.Kind == DateTimeKind.Utc
+            ? command.ScheduledAt
+            : DateTime.SpecifyKind(command.ScheduledAt, DateTimeKind.Utc);
+
         vet.ScheduleVisit(
             command.AnimalId,
-            command.ScheduledAt,
+            scheduledAtUtc,
             command.DurationInHours,
             command.Description
         );
@@ -69,5 +74,26 @@ public class VetCommandServiceImpl : IVetCommandService
         }
 
         await _vetRepository.DeleteAsync(VetToBeDeleted);
+    }
+
+    public async Task PerformVisitAsync(int vetId, int visitId)
+    {
+        
+        var vetWithVisits = await _vetRepository.GetVetWithVisitsByIdAsync(vetId);
+        if (vetWithVisits is null)
+        {
+            throw new KeyNotFoundException($"Vet with id {vetId} does not exist.");
+        }
+
+        var visit = vetWithVisits.Visits.FirstOrDefault(v => v.Id == visitId);
+
+        if (visit is null)
+        {
+            throw new KeyNotFoundException($"Visit with id {visitId} does not exist for vet with id {vetId}.");
+        }
+
+        visit.Perform();
+
+        await _vetRepository.SaveAsync(vetWithVisits);
     }
 }

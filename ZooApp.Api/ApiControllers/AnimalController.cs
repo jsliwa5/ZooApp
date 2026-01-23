@@ -22,7 +22,7 @@ public class AnimalController : ControllerBase
 
 
     [HttpGet]
-    [Authorize(Roles = "ZooKeeper, Manager")]
+    [Authorize(Roles = "ZooKeeper, Manager, Vet")]
     public List<AnimalResult> GetAllAnimals()
     {
         return _animalQueryService.getAllAnimals();
@@ -38,7 +38,7 @@ public class AnimalController : ControllerBase
 
 
     [HttpGet]
-    [Authorize(Roles = "ZooKeeper, Manager")]
+    [Authorize(Roles = "ZooKeeper, Manager, Vet")]
     [Route("{id}")]
     public AnimalResult GetAnimalById([FromRoute] int id)
     {

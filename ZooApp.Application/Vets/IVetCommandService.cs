@@ -7,4 +7,6 @@ public interface IVetCommandService
 {
     Task DeleteVetByIdAsync(int vetId);
     Task ScheduleVisitAsync(int vetId, ScheduleVisitCommand command);
+
+    Task PerformVisitAsync(int vetId, int visitId);
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZooApp.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0871753b48add719be4f4e9fb563eb008f3f86ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27da700a39cbf7d612306df5dbe9bc3bb39c0978")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZooApp.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZooApp.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

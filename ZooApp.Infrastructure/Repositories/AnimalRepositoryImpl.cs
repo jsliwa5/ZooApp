@@ -37,7 +37,16 @@ public class AnimalRepositoryImpl : IAnimalRepository
 
     public async Task<Animal> Save(Animal animal)
     {
-        _context.Animals.Add(animal);
+        if (animal.Id == 0)
+        {
+            _context.Animals.Add(animal);
+
+        }
+        else
+        {
+            _context.Animals.Update(animal);
+        }
+       
         await _context.SaveChangesAsync();
         return animal;
     }

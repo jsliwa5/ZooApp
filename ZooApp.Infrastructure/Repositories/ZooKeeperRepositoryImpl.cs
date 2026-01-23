@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ZooApp.Domain.ZooKeeper;
 using ZooApp.Domain.ZooKeeper.Tasks;
 using ZooApp.Infrastructure.Persistance;
@@ -33,12 +30,14 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         )
     {
 
+        var utcScheduledAt = DateTime.SpecifyKind(scheduledAt, DateTimeKind.Utc);
+
         await _context.Database.ExecuteSqlRawAsync(
             "CALL sp_create_and_assign_task({0}, {1}, {2}, {3}, {4})",
             description,
             duration,
             taskType,
-            scheduledAt,
+            utcScheduledAt,
             animalId
             );
 

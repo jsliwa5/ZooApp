@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ZooApp.Application.Vets;
 using ZooApp.Application.Vets.Commands;
@@ -8,7 +9,7 @@ namespace ZooApp.Api.ApiControllers;
 
 [ApiController]
 [Route("api/vets")]
-public class VetController
+public class VetController : ControllerBase
 {
 
     private readonly IVetCommandService _vetCommandService;
@@ -47,6 +48,26 @@ public class VetController
     public async Task ScheduleVisit([FromRoute] int vetId, [FromBody] ScheduleVisitCommand command)
     {
         await _vetCommandService.ScheduleVisitAsync(vetId, command);
+    }
+
+    [HttpPatch]
+    [Route("{vetId}/visits/{visitId}/perform")]
+    [Authorize(Roles = "Vet")]
+    public async Task<IActionResult> PerformVisit(
+        [FromRoute] int vetId,
+        [FromRoute] int visitId
+        )
+    {
+        await _vetCommandService.PerformVisitAsync(vetId, visitId);
+        return NoContent();
+    }
+
+    [HttpGet]
+    [Route("{vetId}/visits")]
+    [Authorize(Roles = "Manager, Vet")]
+    public async Task<List<VisitResult>> GetVisitsForVet([FromRoute] int vetId)
+    {
+        return await _vetQueryService.GetVisitsForVetAsync(vetId);
     }
 
 

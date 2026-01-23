@@ -35,7 +35,15 @@ public class VetRepositoryImpl : IVetRepository
         return await _context.Vets.FindAsync(id);
     }
 
-    public async Task<List<Visit>> GetVisitsForVet(int vetId)
+    public async Task<Vet?> GetVetWithVisitsByIdAsync(int id)
+    {
+        return await _context.Vets
+            .Include(v => v.Visits)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(v => v.Id == id);
+    }
+
+    public async Task<List<Visit>> GetVisitsForVetAsync(int vetId)
     {
         return await _context.Set<Visit>()
             .Where(v => v.VetId == vetId)
@@ -53,7 +61,17 @@ public class VetRepositoryImpl : IVetRepository
 
     public async Task<Vet> SaveAsync(Vet vet)
     {
-        await _context.Vets.AddAsync(vet);
+
+        if (vet.Id == 0)
+        {
+            await _context.Vets.AddAsync(vet);
+        }
+        else
+        {
+            _context.Vets.Update(vet);
+        }
+
+        await _context.SaveChangesAsync();
         return vet;
     }
 }

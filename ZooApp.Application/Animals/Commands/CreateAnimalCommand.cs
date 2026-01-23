@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZooApp.Domain.Animal;
-
-namespace ZooApp.Application.Animals.Commands;
+﻿namespace ZooApp.Application.Animals.Commands;
 
 public record CreateAnimalCommand
 {

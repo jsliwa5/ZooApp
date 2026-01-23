@@ -176,6 +176,7 @@ public class AuthServiceImpl : IAuthService
         }
         catch
         {
+            Console.WriteLine("Exception occurred during Vet registration.");
             await transaction.RollbackAsync();
             throw;
         }

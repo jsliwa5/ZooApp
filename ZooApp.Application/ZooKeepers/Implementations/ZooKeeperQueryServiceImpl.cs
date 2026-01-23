@@ -29,7 +29,10 @@ public class ZooKeeperQueryServiceImpl : IZooKeeperQueryService
         }
         else
         {
-            tasks = await _zooKeeperRepository.GetTasksForZooKeeperForThePeriodOfTime(id, from.Value, to.Value);
+            var utcFrom = DateTime.SpecifyKind(from.Value, DateTimeKind.Utc);
+            var utcTo = DateTime.SpecifyKind(to.Value, DateTimeKind.Utc);
+
+            tasks = await _zooKeeperRepository.GetTasksForZooKeeperForThePeriodOfTime(id, utcFrom, utcTo);
         }
 
         return tasks.Select(t => new TaskResult(
