@@ -49,14 +49,23 @@ public class ZooKeeperQueryServiceImpl : IZooKeeperQueryService
 
     public async Task<ZooKeeperResult> GetZooKeeperByIdAsync(int id)
     {
+        
+        var currentMonth = DateTime.UtcNow.Month;
+        var currentYear = DateTime.UtcNow.Year;
 
-        var zooKeeper = await _zooKeeperRepository.GetById(id);
+        var data = await _zooKeeperRepository.GetZooKeeperWithLoadAsync(id, currentMonth, currentYear);
+
+        if (data == null)
+        {
+            throw new Exception($"ZooKeeper with id {id} does not exist.");
+        }
 
         return new ZooKeeperResult(
-                zooKeeper.Id,
-                zooKeeper.FirstName,
-                zooKeeper.LastName,
-                zooKeeper.MonthlyHoursLimit
-            );
+            data.Id,
+            data.FirstName,
+            data.LastName,
+            data.MonthlyHoursLimit,
+            data.CurrentLoad
+        );
     }
 }

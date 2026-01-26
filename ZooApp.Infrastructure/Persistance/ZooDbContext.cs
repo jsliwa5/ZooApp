@@ -13,6 +13,9 @@ namespace ZooApp.Infrastructure.Persistance;
 
 public class ZooDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
+
+    public double GetZooKeeperMonthlyHours(int zooKeeperId, int month, int year)
+        => throw new NotSupportedException();
     public ZooDbContext(DbContextOptions<ZooDbContext> options) : base(options)
     {
     }
@@ -30,6 +33,9 @@ public class ZooDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ZooDbContext).Assembly);
+
+        modelBuilder.HasDbFunction(typeof(ZooDbContext).GetMethod(nameof(GetZooKeeperMonthlyHours))!)
+               .HasName("fn_get_zookeeper_monthly_hours");
     }
 
 }

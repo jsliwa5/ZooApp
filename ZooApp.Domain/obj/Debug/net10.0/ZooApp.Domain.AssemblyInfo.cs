@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZooApp.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27da700a39cbf7d612306df5dbe9bc3bb39c0978")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3450302770eb9a35bf921198481912a5296ae3b4")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZooApp.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZooApp.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

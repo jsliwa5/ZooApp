@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ZooApp.Domain.ZooKeeper;
+using ZooApp.Domain.ZooKeeper.ReadModels;
 using ZooApp.Domain.ZooKeeper.Tasks;
 using ZooApp.Infrastructure.Persistance;
 
@@ -78,5 +79,21 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
     {
         
         return await _context.ZooKeepers.AnyAsync(zk => zk.Id == id);
+    }
+
+    public async Task<ZooKeeperWithLoad?> GetZooKeeperWithLoadAsync(int id, int month, int year)
+    {
+        
+        return await _context.ZooKeepers
+            .Where(z => z.Id == id)
+            .Select(z => new ZooKeeperWithLoad(
+                z.Id,
+                z.FirstName,
+                z.LastName,
+                z.MonthlyHoursLimit,
+                // Wywołanie funkcji
+                _context.GetZooKeeperMonthlyHours(z.Id, month, year)
+            ))
+            .FirstOrDefaultAsync();
     }
 }

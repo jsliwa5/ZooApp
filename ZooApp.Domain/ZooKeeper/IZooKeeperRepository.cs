@@ -1,4 +1,5 @@
-﻿using ZooApp.Domain.ZooKeeper.Tasks;
+﻿using ZooApp.Domain.ZooKeeper.ReadModels;
+using ZooApp.Domain.ZooKeeper.Tasks;
 
 namespace ZooApp.Domain.ZooKeeper;
 
@@ -17,4 +18,6 @@ public interface IZooKeeperRepository
     Task Delete(ZooKeeper zooKeeper);
     Task<List<AbstractTask>> GetTasksForZooKeeper(int zooKeeperId);
     Task<List<AbstractTask>> GetTasksForZooKeeperForThePeriodOfTime(int zooKeeperId, DateTime form, DateTime to);
+
+    Task<ZooKeeperWithLoad?> GetZooKeeperWithLoadAsync(int id, int month, int year);
 }
