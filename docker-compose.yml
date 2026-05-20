@@ -13,20 +13,18 @@ services:
 
   api:
     build:
-      context: .              # WAŻNE: Kontekst to główny folder solucji
+      context: .            
       dockerfile: ZooApp.Api/Dockerfile
-      target: build           # Zatrzymujemy się na etapie SDK
+      target: build          
     container_name: zoo_api
     command: dotnet watch run --no-launch-profile
     ports:
       - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      # Connection string do kontenera 'db'
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=zoodb;Username=postgres;Password=postgres
     volumes:
-      - .:/src                # WAŻNE: Montujemy CAŁĄ solucję do kontenera
-      # Wykluczamy foldery bin/obj ze wszystkich projektów, aby nie mieszały się z Linuxowymi w kontenerze
+      - .:/src                
       - /src/ZooApp.Api/bin
       - /src/ZooApp.Api/obj
       - /src/ZooApp.Application/bin
