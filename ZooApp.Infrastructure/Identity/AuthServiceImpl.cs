@@ -74,7 +74,7 @@ public class AuthServiceImpl : IAuthService
             await AddToRoleAsync(user, "ZooKeeper");
 
             var zooKeeper = ZooKeeper.CreateNew(firstName, lastName, hoursLimit, user.Id);
-            await _zooKeeperRepository.Save(zooKeeper);
+            await _zooKeeperRepository.SaveAsync(zooKeeper);
 
             await transaction.CommitAsync();
         }

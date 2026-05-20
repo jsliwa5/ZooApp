@@ -28,7 +28,7 @@ public class AnimalCommandServiceImpl : IAnimalCommandService
             throw new ArgumentException($"Species with id {command.SpeciesId} does not exist.");
         }
 
-        var savedAnimal = await _animalRepository.Save(
+        var savedAnimal = await _animalRepository.SaveAsync(
                 Animal.CreateNew(
                     command.Name,
                     command.SpeciesId
@@ -47,34 +47,34 @@ public class AnimalCommandServiceImpl : IAnimalCommandService
 
     public async Task DeleteByIdAsync(int animalId)
     {
-        var animalToBeDeleted = _animalRepository.GetById(animalId).Result;
+        var animalToBeDeleted = _animalRepository.GetByIdAsync(animalId).Result;
         if (animalToBeDeleted == null)
         {
             throw new ArgumentException($"Animal with id {animalId} does not exist.");
         }
 
-        await _animalRepository.Delete(animalToBeDeleted);
+        await _animalRepository.DeleteAsync(animalToBeDeleted);
     }
 
     public async Task FeedAnimalAsync(int animalId)
     {
-        var animalToBeFed = _animalRepository.GetById(animalId).Result;
+        var animalToBeFed = _animalRepository.GetByIdAsync(animalId).Result;
         if (animalToBeFed == null)
         {
             throw new ArgumentException($"Animal with id {animalId} does not exist.");
         }
         animalToBeFed.Feed(DateTime.UtcNow);
-        await _animalRepository.Save(animalToBeFed);
+        await _animalRepository.SaveAsync(animalToBeFed);
     }
 
     public async Task PerformHealthCheckAsync(int animalId)
     {
-        var animalToHaveItsHealthChecked = _animalRepository.GetById(animalId).Result;
+        var animalToHaveItsHealthChecked = _animalRepository.GetByIdAsync(animalId).Result;
         if (animalToHaveItsHealthChecked == null)
         {
             throw new ArgumentException($"Animal with id {animalId} does not exist.");
         }
         animalToHaveItsHealthChecked.PerformHealthCheck(DateTime.UtcNow);
-        await _animalRepository.Save(animalToHaveItsHealthChecked);
+        await _animalRepository.SaveAsync(animalToHaveItsHealthChecked);
     }
 }

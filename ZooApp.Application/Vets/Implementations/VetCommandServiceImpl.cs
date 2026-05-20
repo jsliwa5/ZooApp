@@ -1,8 +1,6 @@
 ﻿using ZooApp.Application.Vets.Commands;
-using ZooApp.Application.Vets.Results;
 using ZooApp.Domain.Animal;
 using ZooApp.Domain.Vets;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ZooApp.Application.Vets.Implementations;
 

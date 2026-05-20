@@ -6,9 +6,9 @@ namespace ZooApp.Domain.Animal;
 
 public interface IAnimalRepository
 {
-    Task<Animal?> GetById(int id);
-    Task<Animal> Save(Animal animal);
-    Task Delete(Animal animal);
-    Task<List<Animal>> GetAllAnimals();
+    Task<Animal?> GetByIdAsync(int id);
+    Task<Animal> SaveAsync(Animal animal);
+    Task DeleteAsync(Animal animal);
+    Task<List<Animal>> GetAllAnimalsAsync();
     Task<bool> ExistsByIdAsync(int id);
 }

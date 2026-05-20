@@ -18,7 +18,7 @@ public class AnimalQueryServiceImpl : IAnimalQueryService
 
     public List<AnimalResult> getAllAnimals()
     {
-        var allAnimals = _animalRepository.GetAllAnimals().Result;
+        var allAnimals = _animalRepository.GetAllAnimalsAsync().Result;
 
         return allAnimals.ConvertAll(animal => new AnimalResult(
             animal.Id,
@@ -31,7 +31,7 @@ public class AnimalQueryServiceImpl : IAnimalQueryService
 
     public AnimalResult getAnimalById(int id)
     {
-        var searchedAnimal = _animalRepository.GetById(id).Result;
+        var searchedAnimal = _animalRepository.GetByIdAsync(id).Result;
 
         if(searchedAnimal is null)
         {

@@ -51,7 +51,7 @@ public class VetRepositoryImpl : IVetRepository
             .ToListAsync();
     }
 
-    public async Task<List<Visit>> GetVisitsForVisitForTheDate(int vetId, DateTime date)
+    public async Task<List<Visit>> GetVisitsForVisitForTheDateAsync(int vetId, DateTime date)
     {
         return await _context.Set<Visit>()
             .Where(v => v.VetId == vetId && v.ScheduledAt.Date == date.Date)

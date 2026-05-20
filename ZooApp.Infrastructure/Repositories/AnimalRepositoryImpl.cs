@@ -14,7 +14,7 @@ public class AnimalRepositoryImpl : IAnimalRepository
         _context = context;
     }
 
-    public async Task Delete(Animal animal)
+    public async Task DeleteAsync(Animal animal)
     {
         _context.Animals.Remove(animal);
         await _context.SaveChangesAsync();
@@ -25,17 +25,17 @@ public class AnimalRepositoryImpl : IAnimalRepository
         return await _context.Animals.AnyAsync(s => s.Id == id);
     }
 
-    public async Task<List<Animal>> GetAllAnimals()
+    public async Task<List<Animal>> GetAllAnimalsAsync()
     {
         return _context.Animals.ToList();
     }
 
-    public async Task<Animal?> GetById(int id)
+    public async Task<Animal?> GetByIdAsync(int id)
     {
         return _context.Animals.Find(id);
     }
 
-    public async Task<Animal> Save(Animal animal)
+    public async Task<Animal> SaveAsync(Animal animal)
     {
         if (animal.Id == 0)
         {

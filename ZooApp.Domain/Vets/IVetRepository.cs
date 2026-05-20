@@ -11,7 +11,7 @@ public interface IVetRepository
     Task<Vet> SaveAsync(Vet vet);
     Task DeleteAsync(Vet vet);
     Task<List<Visit>> GetVisitsForVetAsync(int vetId);
-    Task<List<Visit>> GetVisitsForVisitForTheDate(int vetId, DateTime date);
+    Task<List<Visit>> GetVisitsForVisitForTheDateAsync(int vetId, DateTime date);
 
     Task<bool> ExistsByIdAsync(int id);
 

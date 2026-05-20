@@ -36,7 +36,7 @@ public class ZooKeeperCommandServiceImpl : IZooKeeperCommandService
     public async Task AsignTaskAutomatically(AsignTaskCommand command)
     {
 
-        await _zooKeeperRepository.CreateAndDispatchTaskAutomatically(
+        await _zooKeeperRepository.CreateAndDispatchTaskAutomaticallyAsync(
                 command.Description,
                 command.Duration,
                 command.TaskType,

@@ -22,7 +22,7 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task CreateAndDispatchTaskAutomatically(
+    public async Task CreateAndDispatchTaskAutomaticallyAsync(
         string description,
         TimeSpan duration,
         string taskType,
@@ -45,12 +45,12 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         
     }
 
-    public async Task<ZooKeeper?> GetById(int id)
+    public async Task<ZooKeeper?> GetByIdAsync(int id)
     {
         return await _context.ZooKeepers.FindAsync(id);
     }
 
-    public async Task<List<AbstractTask>> GetTasksForZooKeeper(int zooKeeperId)
+    public async Task<List<AbstractTask>> GetTasksForZooKeeperAsync(int zooKeeperId)
     {
         return await _context.Set<AbstractTask>()
         .Where(t => t.ZooKeeperId == zooKeeperId)
@@ -58,7 +58,7 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         .ToListAsync();
     }
 
-    public async Task<List<AbstractTask>> GetTasksForZooKeeperForThePeriodOfTime(int zooKeeperId, DateTime from, DateTime to)
+    public async Task<List<AbstractTask>> GetTasksForZooKeeperForThePeriodOfTimeAsync(int zooKeeperId, DateTime from, DateTime to)
     {
         return await _context.Set<AbstractTask>()
         .Where(t => t.ZooKeeperId == zooKeeperId
@@ -68,14 +68,14 @@ public class ZooKeeperRepositoryImpl : IZooKeeperRepository
         .ToListAsync();
     }
 
-    public async Task<ZooKeeper> Save(ZooKeeper zooKeeper)
+    public async Task<ZooKeeper> SaveAsync(ZooKeeper zooKeeper)
     {
         await _context.ZooKeepers.AddAsync(zooKeeper);
         await _context.SaveChangesAsync();
         return zooKeeper;
     }
 
-    public async Task<bool> ExistById(int id)
+    public async Task<bool> ExistByIdAsync(int id)
     {
         
         return await _context.ZooKeepers.AnyAsync(zk => zk.Id == id);

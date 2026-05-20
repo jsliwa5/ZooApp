@@ -5,19 +5,19 @@ namespace ZooApp.Domain.ZooKeeper;
 
 public interface IZooKeeperRepository
 {
-    Task<ZooKeeper?> GetById(int id);
-    Task<bool> ExistById(int id);
-    Task CreateAndDispatchTaskAutomatically(
+    Task<ZooKeeper?> GetByIdAsync(int id);
+    Task<bool> ExistByIdAsync(int id);
+    Task CreateAndDispatchTaskAutomaticallyAsync(
         string description,
         TimeSpan duration,
         string taskType,
         DateTime scheduledAt,     
         int? animalId = null
         ); 
-    Task<ZooKeeper> Save(ZooKeeper zooKeeper);
+    Task<ZooKeeper> SaveAsync(ZooKeeper zooKeeper);
     Task Delete(ZooKeeper zooKeeper);
-    Task<List<AbstractTask>> GetTasksForZooKeeper(int zooKeeperId);
-    Task<List<AbstractTask>> GetTasksForZooKeeperForThePeriodOfTime(int zooKeeperId, DateTime form, DateTime to);
+    Task<List<AbstractTask>> GetTasksForZooKeeperAsync(int zooKeeperId);
+    Task<List<AbstractTask>> GetTasksForZooKeeperForThePeriodOfTimeAsync(int zooKeeperId, DateTime form, DateTime to);
 
     Task<ZooKeeperWithLoad?> GetZooKeeperWithLoadAsync(int id, int month, int year);
 }

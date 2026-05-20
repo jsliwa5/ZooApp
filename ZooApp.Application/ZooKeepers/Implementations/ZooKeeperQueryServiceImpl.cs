@@ -16,7 +16,7 @@ public class ZooKeeperQueryServiceImpl : IZooKeeperQueryService
 
     public async Task<List<TaskResult>> GetTaskForZooKeeperAsync(int id, DateTime? from, DateTime? to)
     {
-        if(!await _zooKeeperRepository.ExistById(id))
+        if(!await _zooKeeperRepository.ExistByIdAsync(id))
         {
             throw new Exception($"ZooKeeper with id {id} does not exist.");
         }
@@ -25,14 +25,14 @@ public class ZooKeeperQueryServiceImpl : IZooKeeperQueryService
 
         if ( (from is null) || (to is null))
         {
-            tasks = await _zooKeeperRepository.GetTasksForZooKeeper(id);
+            tasks = await _zooKeeperRepository.GetTasksForZooKeeperAsync(id);
         }
         else
         {
             var utcFrom = DateTime.SpecifyKind(from.Value, DateTimeKind.Utc);
             var utcTo = DateTime.SpecifyKind(to.Value, DateTimeKind.Utc);
 
-            tasks = await _zooKeeperRepository.GetTasksForZooKeeperForThePeriodOfTime(id, utcFrom, utcTo);
+            tasks = await _zooKeeperRepository.GetTasksForZooKeeperForThePeriodOfTimeAsync(id, utcFrom, utcTo);
         }
 
         return tasks.Select(t => new TaskResult(
